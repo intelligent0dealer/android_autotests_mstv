@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
+import models.fixture.UserFixture;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,18 +21,21 @@ import static jdk.nashorn.internal.objects.Global.print;
 public class AndroidProfile {
     static AppiumDriver<MobileElement> driver;
 
-    public static void rega() {
+    public static void registrationInApp() {
         try {
             openApp();
-            openProfile();
-            openSignUp();
-            inputLogPassReg("test2@amojet.net", "12345678");
-            scrollPage();
-            doneReg();
+
         } catch (Exception exp) {
             System.out.println(exp.getCause());
             System.out.println(exp.getMessage());
             exp.printStackTrace();
+        }
+        finally {
+            openProfile();
+            openSignUp();
+            inputLogPassReg("intelligent.dealer1605+595@gmail.com","1234");
+            scrollPage();
+            doneReg();
         }
     }
 
@@ -48,7 +52,7 @@ public class AndroidProfile {
     public static void logIn() {
         openProfile();
         openSignIn();
-        inputLogPass("intelligent.dealer1605+59@gmail.com","12345678");
+        inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());
         openSignIn();
     }
 
@@ -124,10 +128,14 @@ public class AndroidProfile {
     public static void atPageProfile(String element) {
         MobileElement subscriptionBlock =  driver.findElement(By.id("tv.motorsport.mobile:id/item_subscription"));
         MobileElement subscriptionName = subscriptionBlock.findElementById("tv.motorsport.mobile:id/title");
-        Assert.assertTrue(subscriptionName.getText().equals(element));
+
+        String subscriptionTitle = subscriptionName.getText();
+        String str = "Failure: на странице Profile ожидался заголовок %s, получен %s";
+        Assert.assertTrue(String.format(str, element, subscriptionTitle), subscriptionTitle.equals(element));
     }
 
     public static boolean atPageSignIn(String element) {
+
         if (driver.findElement(By.id("tv.motorsport.mobile:id/sign_in")).equals(element)) {
             return true;
         } else {
@@ -217,6 +225,12 @@ public class AndroidProfile {
         changePassword();
         enterOldNewPass(oldPassword, newPassword);
         atPageProfile("Subscription");
+    }
+
+    public static void pressExitButton() {
+        MobileElement crossButton = driver.findElementById("tv.motorsport.mobile:id/close");
+        crossButton.click();
+
     }
 
 }
