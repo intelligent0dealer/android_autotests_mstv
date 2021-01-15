@@ -21,11 +21,7 @@ public class UserDAO {
 
         try (final Session session = factory.openSession()) {
 
-
             return session.get(User.class, model);
-//            final User result = session.get(User.class, model);
-//
-//            return result != null ? result : new User();
         }
     }
 

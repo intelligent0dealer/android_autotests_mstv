@@ -1,5 +1,6 @@
 package pages;
 
+import com.sun.istack.NotNull;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -16,6 +17,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import static com.sun.jmx.snmp.ThreadContext.contains;
+import static java.lang.Thread.*;
 import static jdk.nashorn.internal.objects.Global.print;
 
 public class AndroidProfile {
@@ -33,7 +35,7 @@ public class AndroidProfile {
         finally {
             openProfile();
             openSignUp();
-            inputLogPassReg("intelligent.dealer1605+595@gmail.com","1234");
+            inputLogPassReg(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());
             scrollPage();
             doneReg();
         }
@@ -133,13 +135,29 @@ public class AndroidProfile {
         String str = "Failure: на странице Profile ожидался заголовок %s, получен %s";
         Assert.assertTrue(String.format(str, element, subscriptionTitle), subscriptionTitle.equals(element));
     }
+    public static void clickSubscribe() {
+        MobileElement subscriptionBlock =  driver.findElement(By.id("tv.motorsport.mobile:id/item_subscription"));
+        MobileElement subscriptionName = subscriptionBlock.findElementById("tv.motorsport.mobile:id/title");
+        subscriptionName.click();
 
-    public static boolean atPageSignIn(String element) {
+    }
 
-        if (driver.findElement(By.id("tv.motorsport.mobile:id/sign_in")).equals(element)) {
-            return true;
+    public static void checkSubscribeAtProfile() throws Exception {
+        MobileElement subscriptionBlock =  driver.findElement(By.id("tv.motorsport.mobile:id/item_subscription"));
+        MobileElement subscriptionDescription = subscriptionBlock.findElement(By.id("tv.motorsport.mobile:id/tv_description"));
+
+        int subscriptionDataAvailableTimer = 0;
+
+        while (subscriptionDescription == null && (subscriptionDataAvailableTimer < 10000)) {
+            sleep(100);
+            subscriptionDataAvailableTimer += 100;
+            subscriptionDescription = subscriptionBlock.findElement(By.id("tv.motorsport.mobile:id/tv_description"));
+        }
+
+        if (subscriptionDescription != null) {
+            System.out.println("You're in user profile");
         } else {
-            return false;
+            throw new Exception("Unvisible");
         }
     }
 
@@ -166,8 +184,24 @@ public class AndroidProfile {
     }
 
     public static void clickUsername() {
-        MobileElement usernameButton = driver.findElementById("tv.motorsport.mobile:id/item_username");
+        MobileElement usernameBlock = driver.findElementById("tv.motorsport.mobile:id/item_username");
+        MobileElement usernameButton = usernameBlock.findElementById("tv.motorsport.mobile:id/title");
         usernameButton.click();
+
+    } public static void clickContinueSubButton() {
+        MobileElement continueButton = driver.findElementById("tv.motorsport.mobile:id/continue_btn");
+        continueButton.click();
+    }
+    public static void buyMonthlySub() {
+        MobileElement monthlySubscriptionBlock = driver.findElementById("tv.motorsport.mobile:id/subscription_scv_plan_monthly");
+        MobileElement monthlySubscriptionButton = monthlySubscriptionBlock.findElementById("tv.motorsport.mobile:id/subscription_tv_name");
+        MobileElement subscribeButton = driver.findElementById("com.android.vending:id/0_resource_name_obfuscated");
+        monthlySubscriptionButton.click();
+        subscribeButton.click();
+    }
+    public static void checkSuccessBuy() {
+        MobileElement successText = driver.findElementById("tv.motorsport.mobile:id/description_tv");
+        Assert.assertTrue("Вы успешно совершили покупку.",true);
     }
 
     public static void inputUserName(String username) {
@@ -221,10 +255,10 @@ public class AndroidProfile {
     }
 
     public static void changePassword(String oldPassword, String newPassword) {
-        atPageProfile("Subscription");
+        atPageProfile("Подписка");
         changePassword();
         enterOldNewPass(oldPassword, newPassword);
-        atPageProfile("Subscription");
+        atPageProfile("Подписка");
     }
 
     public static void pressExitButton() {
