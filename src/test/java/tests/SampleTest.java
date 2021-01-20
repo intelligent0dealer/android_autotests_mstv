@@ -1,5 +1,5 @@
 package tests;
-
+// Кейсы для ближайшего выполнения: Покупка подписки/логин из разделов: Profile, Premium, PPV, Add to my feed.
 
 import models.fixture.UserFixture;
 import org.aspectj.weaver.ast.And;
@@ -17,6 +17,7 @@ public class SampleTest {
 
 
     @Test
+
     @Description("Регистрация пользователя в приложении")
         public void fullRegistration() throws Exception {
 
@@ -34,25 +35,31 @@ public class SampleTest {
         AndroidProfile.checkSubscribeAtProfile();
     }
     @Test
-        public void buySubscription() throws Exception {
+        public void buySubscription() {
         AndroidProfile.openApplication();
         AndroidProfile.logIn();
         AndroidProfile.checkSubscribeAtProfile();
         AndroidProfile.clickSubscribe();
         AndroidProfile.buyMonthlySub();
+        AndroidProfile.buyMonthlySubOutsideApp();
         AndroidProfile.checkSuccessBuy();
         AndroidProfile.clickContinueSubButton();
+        AndroidProfile.checkSubscribeAtProfile();
         TestAPI.getSubscriptionInfo();
         DbUtils.deleteSubscribe(UserFixture.EMAIL_FOR_API_TEST.getValue());
-        DbUtils.deleteUser(UserFixture.EMAIL_FOR_API_TEST.getValue());
+  //      DbUtils.deleteUser(UserFixture.EMAIL_FOR_API_TEST.getValue());
     }
     @Test
         public void buyPPV() throws Exception {
         AndroidProfile.openApp();
         AndroidProfile.logIn();
-        // search
-        // ppv input
-        // open
+        AndroidProfile.checkSubscribeAtProfile();
+        AndroidProfile.pressBackButton();
+        AndroidProfile.pressSearchButton();
+        AndroidProfile.searchPPVEpisode();
+        AndroidProfile.waitVisibleSearchResultAndClick();
+        AndroidProfile.verificationPPVPageLoaded();
+
         // buy
         // check
         // clear
@@ -81,8 +88,10 @@ public class SampleTest {
         }
 
     @Test
-        public void changeGender() throws Exception {
+        public void changeGender()  {
             AndroidProfile.openApplication();
+            AndroidProfile.getInfo();
+        /*  AndroidProfile.openApplication();
             AndroidProfile.logIn();
             AndroidProfile.checkSubscribeAtProfile();
 
@@ -91,7 +100,7 @@ public class SampleTest {
 
             AndroidProfile.checkSubscribeAtProfile();
             AndroidProfile.checkGender("Мужской");
-            TestAPI.postClearToOtherGender();
+            TestAPI.postClearToOtherGender(); */
     }
 
     @Test

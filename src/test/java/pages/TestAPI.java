@@ -71,8 +71,8 @@ public class TestAPI {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("email", "intelligent.dealer1605+59@gmail.com")
-                        .formParam("password", "12345678")
+                        .formParam("email", UserFixture.EMAIL_FOR_API_TEST.getValue())
+                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST.getValue())
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfo =
@@ -82,7 +82,7 @@ public class TestAPI {
                         .get("https://t.motorsport.tv/api/subscriptionmanagement/front/subscription/active");
 
         getProfileInfo.then().body("data.subscription.status",notNullValue()).statusCode(200);
-        //  getProfileInfo.then().body("data.subscription.googleStatus", notNullValue()).statusCode(200);
+    //     getProfileInfo.then().body("data.subscription.googleStatus", notNullValue()).statusCode(200);
     }
 
     public static void confirmationRegisterNewUser() {

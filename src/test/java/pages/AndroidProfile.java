@@ -1,5 +1,10 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.conditions.Visible;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.sun.istack.NotNull;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -13,9 +18,14 @@ import org.openqa.selenium.interactions.touch.TouchActions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.sun.jmx.snmp.ThreadContext.contains;
 import static java.lang.Thread.*;
 import static jdk.nashorn.internal.objects.Global.print;
@@ -72,6 +82,7 @@ public class AndroidProfile {
         URL url = new URL("http://127.0.0.1:4723/wd/hub");
 
         driver = new AppiumDriver<MobileElement>(url, cap);
+        WebDriverRunner.setWebDriver(driver);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
@@ -81,106 +92,63 @@ public class AndroidProfile {
     }
 
     public static void openProfile() {
-        MobileElement profileButton = driver.findElement(By.id("tv.motorsport.mobile:id/action_settings"));
-        profileButton.click();
-
+        $(By.id("tv.motorsport.mobile:id/action_settings")).click();
     }
 
     public static void openSignIn() {
-        MobileElement signInButton = driver.findElement(By.id("tv.motorsport.mobile:id/sign_in"));
-        signInButton.click();
+       $(By.id("tv.motorsport.mobile:id/sign_in")).click();
     }
 
     public static void openSignUp() {
-        MobileElement signUpButton = driver.findElement(By.id("tv.motorsport.mobile:id/sign_up"));
-        signUpButton.click();
+        $(By.id("tv.motorsport.mobile:id/sign_up")).click();
     }
 
     public static void inputLogPass(String login, String password) {
-        MobileElement loginField = driver.findElement(By.id("tv.motorsport.mobile:id/login_tiet_email"));
-        MobileElement passField = driver.findElement(By.id("tv.motorsport.mobile:id/login_tiet_password"));
-        loginField.click();
-        loginField.sendKeys(login);
-        passField.click();
-        passField.sendKeys(password);
+        $(By.id("tv.motorsport.mobile:id/login_tiet_email")).sendKeys(login);
+        $(By.id("tv.motorsport.mobile:id/login_tiet_password")).sendKeys(password);
     }
 
     public static void signOut() {
-        MobileElement signOutButton = driver.findElement(By.id("tv.motorsport.mobile:id/log_out"));
-        signOutButton.click();
+        $(By.id("tv.motorsport.mobile:id/log_out")).click();
     }
 
     public static void inputLogPassReg(String login, String password) {
-        MobileElement loginFieldReg = driver.findElement(By.id("tv.motorsport.mobile:id/register_tiet_email"));
-        MobileElement passFieldReg = driver.findElement(By.id("tv.motorsport.mobile:id/register_tiet_password"));
-        MobileElement confirm = driver.findElement(By.id("tv.motorsport.mobile:id/register_tiet_confirm_password"));
-        loginFieldReg.click();
-        loginFieldReg.sendKeys(login);
-        passFieldReg.click();
-        passFieldReg.sendKeys(password);
-        confirm.click();
-        confirm.sendKeys(password);
+        $(By.id("tv.motorsport.mobile:id/register_tiet_email")).sendKeys(login);
+        $(By.id("tv.motorsport.mobile:id/register_tiet_password")).sendKeys(password);
+        $(By.id("tv.motorsport.mobile:id/register_tiet_confirm_password")).sendKeys(password);
     }
 
     public static void doneReg() {
-        MobileElement continueReg = driver.findElement(By.id("tv.motorsport.mobile:id/register_btn_done"));
-        continueReg.click();
+        $(By.id("tv.motorsport.mobile:id/register_btn_done")).click();
     }
 
-    public static void atPageProfile(String element) {
-        MobileElement subscriptionBlock =  driver.findElement(By.id("tv.motorsport.mobile:id/item_subscription"));
-        MobileElement subscriptionName = subscriptionBlock.findElementById("tv.motorsport.mobile:id/title");
-
-        String subscriptionTitle = subscriptionName.getText();
-        String str = "Failure: на странице Profile ожидался заголовок %s, получен %s";
-        Assert.assertTrue(String.format(str, element, subscriptionTitle), subscriptionTitle.equals(element));
-    }
     public static void clickSubscribe() {
-        MobileElement subscriptionBlock =  driver.findElement(By.id("tv.motorsport.mobile:id/item_subscription"));
-        MobileElement subscriptionName = subscriptionBlock.findElementById("tv.motorsport.mobile:id/title");
-        subscriptionName.click();
-
+        $(By.id("tv.motorsport.mobile:id/item_subscription")).click();
     }
 
-    public static void checkSubscribeAtProfile() throws Exception {
+    public static void checkSubscribeAtProfile() {
         MobileElement subscriptionBlock =  driver.findElement(By.id("tv.motorsport.mobile:id/item_subscription"));
         MobileElement subscriptionDescription = subscriptionBlock.findElement(By.id("tv.motorsport.mobile:id/tv_description"));
-
-        int subscriptionDataAvailableTimer = 0;
-
-        while (subscriptionDescription == null && (subscriptionDataAvailableTimer < 10000)) {
-            sleep(100);
-            subscriptionDataAvailableTimer += 100;
-            subscriptionDescription = subscriptionBlock.findElement(By.id("tv.motorsport.mobile:id/tv_description"));
-        }
-
-        if (subscriptionDescription != null) {
-            System.out.println("You're in user profile");
-        } else {
-            throw new Exception("Unvisible");
-        }
+        $(subscriptionDescription).waitUntil(Condition.exist, 10000);
+        System.out.println("You're in user profile");
     }
 
     public static void goToName() {
-        MobileElement nameButton = driver.findElement(By.id("tv.motorsport.mobile:id/item_name"));
-        nameButton.click();
+        $(By.id("tv.motorsport.mobile:id/item_name")).click();
     }
 
     public static void inputNameLastDone(String name, String surname) {
-        MobileElement nameField = driver.findElement(By.id("tv.motorsport.mobile:id/name"));
-        MobileElement lastNameField = driver.findElement(By.id("tv.motorsport.mobile:id/surname"));
-        MobileElement doneButton = driver.findElement(By.id("tv.motorsport.mobile:id/settings_menu_done"));
-        nameField.click();
-        nameField.sendKeys(name);
-        lastNameField.click();
-        lastNameField.sendKeys(surname);
-        doneButton.click();
+        $(By.id("tv.motorsport.mobile:id/name")).click();
+        $(By.id("tv.motorsport.mobile:id/name")).sendKeys(name);
+
+        $(By.id("tv.motorsport.mobile:id/surname")).click();
+        $(By.id("tv.motorsport.mobile:id/surname")).sendKeys(surname);
+
+        $(By.id("tv.motorsport.mobile:id/settings_menu_done")).click();
     }
 
     public static void checkNameLast(String text){
-        MobileElement textLastNameBlock = driver.findElementById("tv.motorsport.mobile:id/item_name");
-        MobileElement textLastName = textLastNameBlock.findElementById("tv.motorsport.mobile:id/tv_description");
-        Assert.assertTrue(textLastName.getText().equals(text));
+        $$(By.id("tv.motorsport.mobile:id/item_name")).findBy(id("tv.motorsport.mobile:id/tv_description")).shouldHave(exactText(text));
     }
 
     public static void clickUsername() {
@@ -188,28 +156,28 @@ public class AndroidProfile {
         MobileElement usernameButton = usernameBlock.findElementById("tv.motorsport.mobile:id/title");
         usernameButton.click();
 
-    } public static void clickContinueSubButton() {
-        MobileElement continueButton = driver.findElementById("tv.motorsport.mobile:id/continue_btn");
-        continueButton.click();
     }
+
+    public static void clickContinueSubButton() {
+        $(By.id("tv.motorsport.mobile:id/continue_btn")).click();
+    }
+
     public static void buyMonthlySub() {
-        MobileElement monthlySubscriptionBlock = driver.findElementById("tv.motorsport.mobile:id/subscription_scv_plan_monthly");
-        MobileElement monthlySubscriptionButton = monthlySubscriptionBlock.findElementById("tv.motorsport.mobile:id/subscription_tv_name");
-        MobileElement subscribeButton = driver.findElementById("com.android.vending:id/0_resource_name_obfuscated");
-        monthlySubscriptionButton.click();
-        subscribeButton.click();
+        $(By.id("tv.motorsport.mobile:id/subscription_tv_name")).shouldHave(text("МЕСЯЧНЫЙ")).click();
     }
+
+    public static void buyMonthlySubOutsideApp() {
+        $(By.className("android.widget.Button")).shouldHave(text("Подписаться")).click();
+    }
+
     public static void checkSuccessBuy() {
-        MobileElement successText = driver.findElementById("tv.motorsport.mobile:id/description_tv");
-        Assert.assertTrue("Вы успешно совершили покупку.",true);
+        $(By.id("tv.motorsport.mobile:id/description_tv")).shouldHave(text("Вы успешно совершили покупку."));
+        System.out.println("Успех");
     }
 
     public static void inputUserName(String username) {
-        MobileElement usernameField = driver.findElementById("tv.motorsport.mobile:id/username");
-        MobileElement doneButton = driver.findElement(By.id("tv.motorsport.mobile:id/settings_menu_done"));
-        usernameField.click();
-        usernameField.sendKeys(username);
-        doneButton.click();
+        $(By.id("tv.motorsport.mobile:id/username")).sendKeys(username);
+        $(By.id("tv.motorsport.mobile:id/settings_menu_done"));
     }
 
     public static void checkUserName(String username){
@@ -219,13 +187,11 @@ public class AndroidProfile {
     }
 
     public static void clickGender() {
-        MobileElement genderButton = driver.findElementById("tv.motorsport.mobile:id/item_gender");
-        genderButton.click();
+        $(By.id("tv.motorsport.mobile:id/item_gender")).click();
     }
 
     public static void chooseGender(){
-        MobileElement femaleButton = driver.findElementById("tv.motorsport.mobile:id/gender_chooser_male");
-        femaleButton.click();
+        $(By.id("tv.motorsport.mobile:id/gender_chooser_male"));
     }
 
     public static void checkGender (String gender){
@@ -236,35 +202,85 @@ public class AndroidProfile {
     }
 
     public static void changePassword () {
-        MobileElement changePasswordButton = driver.findElementById("tv.motorsport.mobile:id/item_password");
-        changePasswordButton.click();
+        $(By.id("tv.motorsport.mobile:id/item_password"));
     }
 
     public static void enterOldNewPass(String currentpass, String newpass) {
-        MobileElement currentField = driver.findElementById("tv.motorsport.mobile:id/currentPassword");
-        MobileElement newPassField = driver.findElementById("tv.motorsport.mobile:id/newPassword");
-        MobileElement confirmPassField = driver.findElementById("tv.motorsport.mobile:id/confirmPassword");
-        currentField.click();
-        currentField.sendKeys(currentpass);
-        newPassField.click();
-        newPassField.sendKeys(newpass);
-        confirmPassField.click();
-        confirmPassField.sendKeys(newpass);
-        MobileElement doneButton = driver.findElement(By.id("tv.motorsport.mobile:id/settings_menu_done"));
-        doneButton.click();
+        $(By.id("tv.motorsport.mobile:id/currentPassword")).sendKeys(currentpass);
+        $(By.id("tv.motorsport.mobile:id/newPassword")).sendKeys(newpass);
+        $(By.id("tv.motorsport.mobile:id/confirmPassword")).sendKeys(newpass);
+        $(By.id("tv.motorsport.mobile:id/settings_menu_done")).click();
     }
 
     public static void changePassword(String oldPassword, String newPassword) {
-        atPageProfile("Подписка");
+        checkSubscribeAtProfile();
         changePassword();
         enterOldNewPass(oldPassword, newPassword);
-        atPageProfile("Подписка");
+        checkSubscribeAtProfile();
     }
 
     public static void pressExitButton() {
-        MobileElement crossButton = driver.findElementById("tv.motorsport.mobile:id/close");
-        crossButton.click();
+        $(By.id("tv.motorsport.mobile:id/close")).click();
+    }
 
+    public static void pressBackButton() {
+       $(By.className("android.widget.ImageButton")).click();
+    }
+
+    public static void pressSearchButton(){
+        $(By.id("tv.motorsport.mobile:id/action_search")).click();
+    }
+
+    public static void searchPPVEpisode(){
+        $(By.id("tv.motorsport.mobile:id/search_src_text")).sendKeys(UserFixture.NAME_OF_PPV_EPISODE.getValue());
+        driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
+    }
+
+    public static void waitVisibleSearchResultAndClick() throws Exception {
+
+        MobileElement nameOfEpisode = driver.findElementById("tv.motorsport.mobile:id/title");
+
+        int searchResultsAvailableTimer = 0;
+
+        while (nameOfEpisode == null && (searchResultsAvailableTimer < 10000)) {
+            sleep(100);
+            searchResultsAvailableTimer += 100;
+            nameOfEpisode = driver.findElementById("tv.motorsport.mobile:id/title");
+        }
+
+        if (nameOfEpisode != null) {
+            $(nameOfEpisode).shouldHave(text(UserFixture.NAME_OF_PPV_EPISODE.getValue())).click();
+            System.out.println("Episode found");
+        } else {
+            throw new Exception("Episode not found");
+        }
+    }
+
+    public static void getInfo(){
+        Map<String, Object> args = new HashMap<>();
+        args.put("command", "getprop");
+        args.put("args", Lists.newArrayList("persist.sys.locale"));
+        String output = (String) driver.executeScript("mobile: shell", args);
+        System.out.println(output);
+    }
+
+    public static void verificationPPVPageLoaded() throws Exception{
+        MobileElement infoElement = driver.findElementById("tv.motorsport.mobile:id/tabs");
+
+        int searchResultsAvailableTimer = 0;
+
+        while (infoElement == null && (searchResultsAvailableTimer < 10000)) {
+            sleep(100);
+            searchResultsAvailableTimer += 100;
+            infoElement = driver.findElementById("tv.motorsport.mobile:id/tabs");
+        }
+
+        if (infoElement != null) {
+            $(infoElement).shouldHave(text("Информация"));
+            System.out.println("You're on PPV episode page");
+        } else {
+            throw new Exception("Oops, something went wrong");
+        }
     }
 
 }
