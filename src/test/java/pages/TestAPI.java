@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class TestAPI {
 
-    public static void postClearNickname() {
+    public void postClearNickname() {
         Response getBearer =
                 given()
                     .contentType("application/x-www-form-urlencoded")
@@ -30,7 +30,7 @@ public class TestAPI {
 
     }
 
-    public static void postClearToOtherGender() {
+    public void postClearToOtherGender() {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
@@ -48,7 +48,7 @@ public class TestAPI {
 
     }
 
-    public static void postClearNameSurname() {
+    public void postClearNameSurname() {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
@@ -67,7 +67,7 @@ public class TestAPI {
 
     }
 
-    public static void getSubscriptionInfo() {
+    public void getSubscriptionInfo() {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
@@ -85,20 +85,20 @@ public class TestAPI {
     //     getProfileInfo.then().body("data.subscription.googleStatus", notNullValue()).statusCode(200);
     }
 
-    public static void confirmationRegisterNewUser() {
+    public void confirmationRegisterNewUser() {
 
-        String registerToken = DbUtils.getUserConfirmationToken(UserFixture.EMAIL_FOR_API_TEST.getValue());
+        String registerToken = DbUtils.getUserConfirmationToken(UserFixture.EMAIL_FOR_REGISTRATION_TEST.getValue());
 
         given().param("token", registerToken).
                 post("https://t.motorsport.tv/api/usermanagement/confirm-email").then().statusCode(200);
     }
 
-    public static void verificationEmailConfirmed() {
+    public void verificationEmailConfirmed() {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("email", "intelligent.dealer1605+59@gmail.com")
-                        .formParam("password", "12345678")
+                        .formParam("email",UserFixture.EMAIL_FOR_REGISTRATION_TEST)
+                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         getBearer.then().body("data.user.is_email_confirmed",equalTo(true)).statusCode(200);
     }

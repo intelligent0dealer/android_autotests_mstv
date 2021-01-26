@@ -1,5 +1,6 @@
 package pages.DbUtils;
 
+
 import java.sql.*;
 
 public class DbUtils {
@@ -33,7 +34,7 @@ public class DbUtils {
         return token;
     }
 
-    public static void deleteSubscribeRoku(String email) {
+    public  void deleteSubscribe(String email) {
         Connection connection = null;
         String URL_CONTENT = "jdbc:postgresql://psql-cluster.us.testing.motorsport.tv:5433/motorsport_subscription";
 
@@ -74,40 +75,7 @@ public class DbUtils {
         }
     }
 
-    public static void deleteSubscribe(String email) {
-        Connection connection = null;
-        String URL_CONTENT = "jdbc:postgresql://psql-cluster.us.testing.motorsport.tv:5433/motorsport_subscription";
-
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            Statement statement = connection.createStatement();
-            String SQL = "SELECT id FROM users WHERE email like '%" + email + "%'";
-            ResultSet resultSet;
-            resultSet = statement.executeQuery(SQL);
-            while (resultSet.next()) {
-                int idUser = resultSet.getInt("id");
-
-                connection = DriverManager.getConnection(URL_CONTENT, USERNAME, PASSWORD);
-                PreparedStatement deleteFromTransactionStatement = connection.prepareStatement("DELETE FROM transactions WHERE user_id = ?");
-                deleteFromTransactionStatement.setInt(1, idUser);
-                deleteFromTransactionStatement.executeUpdate();
-
-                PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM subscriptions WHERE user_id = ? ");
-                deleteStatement.setInt(1, idUser);
-                deleteStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void deleteUser(String email) {
+    public  void deleteUser(String email) {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
