@@ -3,22 +3,26 @@ package tests;
 import models.fixture.UserFixture;
 import org.testng.annotations.*;
 import pages.AndroidProfile;
-import pages.DbUtils.DbUtils;
-import pages.TestAPI;
+import setUp.SetupConfig;
+
+import java.net.MalformedURLException;
 
 public class PPV {
+    SetupConfig setupConfig = new SetupConfig();
+    AndroidProfile androidProfile = new AndroidProfile(setupConfig.driver);
 
-    AndroidProfile androidProfile = new AndroidProfile();
-    TestAPI testAPI = new TestAPI();
-    DbUtils dbUtils = new DbUtils();
+
+    public PPV() throws MalformedURLException {
+    }
 
     @BeforeClass
-    public static void setUp() {
+    public  void setUp() {
+        setupConfig.openAppiumSession();
     }
 
 
     @Test
-    public void buyPPV() throws Exception {
+    public void buyPPV() {
         androidProfile.openProfile();
         androidProfile.openSignIn();
         androidProfile.inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());

@@ -7,16 +7,22 @@ import org.testng.annotations.Test;
 import pages.AndroidProfile;
 import setUp.SetupConfig;
 
+import java.net.MalformedURLException;
+
 public class SignIn {
-    AndroidProfile androidProfile = new AndroidProfile();
     SetupConfig setupConfig = new SetupConfig();
+    AndroidProfile androidProfile = new AndroidProfile(setupConfig.driver);
+
+    public SignIn() throws MalformedURLException {
+    }
+
 
     @BeforeClass
     public void setUp () throws Exception {
         setupConfig.openAppiumSession();
     }
     @Test
-    public void buySubscription() {
+    public void signInSignOut() {
         androidProfile.openProfile();
         androidProfile.openSignIn();
         androidProfile.inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());

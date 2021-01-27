@@ -8,14 +8,19 @@ import pages.DbUtils.DbUtils;
 import pages.TestAPI;
 import setUp.SetupConfig;
 
+import java.net.MalformedURLException;
 
 
 public class Registration {
 
-    AndroidProfile androidProfile = new AndroidProfile();
+    SetupConfig setupConfig = new  SetupConfig();
+    AndroidProfile androidProfile = new AndroidProfile(setupConfig.driver);
     TestAPI testAPI = new TestAPI();
     DbUtils dbUtils = new DbUtils();
-    SetupConfig setupConfig = new  SetupConfig();
+
+    public Registration() throws MalformedURLException {
+    }
+
 
     @BeforeClass
     public  void  setUp () throws Exception {

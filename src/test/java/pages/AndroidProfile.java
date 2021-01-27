@@ -1,22 +1,23 @@
 package pages;
 
 import com.google.common.collect.ImmutableMap;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
 import models.fixture.UserFixture;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import setUp.SetupConfig;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-
 public class AndroidProfile {
-    SetupConfig setupConfig = new SetupConfig();
 
-
+    public AppiumDriver<MobileElement> driver;
+    public AndroidProfile(AppiumDriver<MobileElement> driver) {
+        this.driver=driver;
+    }
 
     public void openProfile() {
         $(By.id("tv.motorsport.mobile:id/action_settings")).click();
@@ -54,7 +55,7 @@ public class AndroidProfile {
     }
 
     public void checkSubscribeAtProfile() {
-        $(By.id("tv.motorsport.mobile:id/item_subscription")).$(By.id("tv.motorsport.mobile:id/tv_description")).waitUntil(exist, 10000);
+        $(By.id("tv.motorsport.mobile:id/item_subscription")).$(By.id("tv.motorsport.mobile:id/tv_description")).waitUntil(exist,10000);
         System.out.println("You're in user profile");
 
     }
@@ -77,7 +78,7 @@ public class AndroidProfile {
     }
 
     public void clickUsername() {
-        MobileElement usernameBlock = setupConfig.driver.findElementById("tv.motorsport.mobile:id/item_username");
+        MobileElement usernameBlock = this.driver.findElementById("tv.motorsport.mobile:id/item_username");
         MobileElement usernameButton = usernameBlock.findElementById("tv.motorsport.mobile:id/title");
         usernameButton.click();
 
@@ -106,9 +107,9 @@ public class AndroidProfile {
     }
 
     public  void checkUserName(String username){
-        MobileElement usernameBlock= setupConfig.driver.findElementById("tv.motorsport.mobile:id/item_username");
+        MobileElement usernameBlock= this.driver.findElementById("tv.motorsport.mobile:id/item_username");
         MobileElement usernameName = usernameBlock.findElementById("tv.motorsport.mobile:id/tv_description");
-        Assert.assertTrue(usernameName.getText().equals(username));
+        Assert.assertEquals(usernameName.getText(), username);
     }
 
     public void clickGender() {
@@ -120,7 +121,7 @@ public class AndroidProfile {
     }
 
     public  void checkGender (String gender){
-        MobileElement genderBlock = setupConfig.driver.findElementById("tv.motorsport.mobile:id/item_gender");
+        MobileElement genderBlock = this.driver.findElementById("tv.motorsport.mobile:id/item_gender");
         MobileElement genderName = genderBlock.findElementById("tv.motorsport.mobile:id/tv_description");
         System.out.println(genderName.getText());
         Assert.assertTrue(genderName.getText().equals(gender));
@@ -158,18 +159,21 @@ public class AndroidProfile {
 
     public  void searchPPVEpisode(){
         $(By.id("tv.motorsport.mobile:id/search_src_text")).sendKeys(UserFixture.NAME_OF_PPV_EPISODE.getValue());
-        setupConfig.driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
+        this.driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
     }
+
     public void pressSignOut() {
         $(By.id("tv.motorsport.mobile:id/log_out")).click();
     }
+
     public void unloginVerification(){
         $(By.id("tv.motorsport.mobile:id/sign_in")).shouldBe(visible);
     }
+
     public void scrollAtProfilePage() {
-            new TouchAction(setupConfig.driver).press(PointOption.point(550, 640))
-                    .waitAction().moveTo(PointOption.point(550, 10)).release().perform();
-        }
+        new TouchAction(this.driver).press(PointOption.point(550, 640))
+                .waitAction().moveTo(PointOption.point(550, 10)).release().perform();
+    }
 }
 
 
