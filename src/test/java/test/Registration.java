@@ -1,14 +1,14 @@
-package tests;
+package test;
 
 import models.fixture.UserFixture;
 import org.springframework.context.annotation.Description;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
 import pages.AndroidProfile;
 import pages.DbUtils.DbUtils;
 import pages.TestAPI;
 import setUp.SetupConfig;
-
-import java.net.MalformedURLException;
 
 
 public class Registration {
@@ -18,17 +18,9 @@ public class Registration {
     TestAPI testAPI = new TestAPI();
     DbUtils dbUtils = new DbUtils();
 
-    public Registration() throws MalformedURLException {
-    }
-
-
-    @BeforeClass
-    public  void  setUp () throws Exception {
-        setupConfig.openAppiumSession();
-    }
     @Test
     @Description("Full registration and login by created account")
-        public void registration() {
+        public void registrationFromProfilePage() {
             androidProfile.openProfile();
             androidProfile.openSignUp();
             androidProfile.inputLogPassReg(UserFixture.EMAIL_FOR_REGISTRATION_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());
@@ -44,7 +36,7 @@ public class Registration {
             androidProfile.checkSubscribeAtProfile();
     }
 
- /*   @Test
+   @Test
     @Description("Duplicate registration method")
         public void registrationAgain() {
             androidProfile.openProfile();
@@ -59,7 +51,21 @@ public class Registration {
             androidProfile.openSignIn();
             androidProfile.checkSubscribeAtProfile();
     }
-*/
+    @Test
+        public void registrationFromFeedTab() {
+    }
+
+    @Test
+        public void registrationFromSignInPage() {
+
+    }
+    @Test
+        public void registrationFromPremiumEpisode () {
+    }
+    @Test
+        public void registrationFromPPVPage() {
+
+    }
     @AfterMethod
     @Description("If u want >1 registration")
         public void deleteNewUser() {

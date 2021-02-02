@@ -1,13 +1,12 @@
-package tests;
+package test.subscription;
 
 import models.fixture.UserFixture;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.Test;
 import pages.AndroidProfile;
 import pages.DbUtils.DbUtils;
 import pages.TestAPI;
 import setUp.SetupConfig;
-
-import java.net.MalformedURLException;
 
 
 public class Subscription {
@@ -16,14 +15,7 @@ public class Subscription {
     TestAPI testAPI = new TestAPI();
     DbUtils dbUtils = new DbUtils();
 
-    public Subscription() throws MalformedURLException {
-    }
 
-
-    @BeforeClass
-        public void setUp ()  {
-        setupConfig.openAppiumSession();
-    }
     @Test
         public void buySubscription() {
         androidProfile.openProfile();
@@ -34,7 +26,7 @@ public class Subscription {
         androidProfile.clickSubscribe();
         androidProfile.buyMonthlySub();
         androidProfile.buyMonthlySubOutsideApp();
-        androidProfile.checkSuccessBuy();
+        androidProfile.checkSuccessBuy("message"); // TODO EN + RU TEXTS
         androidProfile.clickContinueSubButton();
         androidProfile.checkSubscribeAtProfile();
         testAPI.getSubscriptionInfo();

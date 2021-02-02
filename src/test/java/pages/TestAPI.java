@@ -3,7 +3,6 @@ package pages;
 
 import io.restassured.response.Response;
 import models.fixture.UserFixture;
-import org.junit.Test;
 import pages.DbUtils.DbUtils;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -102,4 +101,37 @@ public class TestAPI {
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         getBearer.then().body("data.user.is_email_confirmed",equalTo(true)).statusCode(200);
     }
+
+    public void checkPPVAccessPermanent() {
+        Response getBearer =
+                given()
+                        .contentType("application/x-www-form-urlencoded")
+                        .formParam("email",UserFixture.EMAIL_FOR_API_TEST)
+                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
+                        .when().post("https://t.motorsport.tv/api/usermanagement/auth");
+        Response getProfileInfo =
+                given()
+                        .header("bearer", getBearer.body().jsonPath().getString("data.token"))
+                        .contentType("application/x-www-form-urlencoded")
+                        .when().get("https://t.motorsport.tv/api/v1/content/info/episode/34417");
+        getProfileInfo.then().body("data.access.granted.permanent",equalTo(true)).statusCode(200);
+
+    }
+
+    public void checkPPVAccessRent() {
+        Response getBearer =
+                given()
+                        .contentType("application/x-www-form-urlencoded")
+                        .formParam("email",UserFixture.EMAIL_FOR_API_TEST)
+                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
+                        .when().post("https://t.motorsport.tv/api/usermanagement/auth");
+        Response getProfileInfo =
+                given()
+                        .header("bearer", getBearer.body().jsonPath().getString("data.token"))
+                        .contentType("application/x-www-form-urlencoded")
+                        .when().get("https://t.motorsport.tv/api/v1/content/info/episode/34417");
+        getProfileInfo.then().body("data.access.granted.permanent",equalTo(false)).statusCode(200);
+
+    }
+
 }
