@@ -40,8 +40,8 @@ public class SetupConfig {
 
     private void openAppiumSession()  {
         WebDriverRunner.setWebDriver(this.driver);
-        this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        this.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         Configuration.screenshots = false;
-        Configuration.timeout = 10000;
+        Configuration.timeout = 30_000;
     }
 }

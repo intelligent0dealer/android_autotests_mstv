@@ -1,12 +1,17 @@
 package pages;
 
-
+import org.json.*;
 import io.restassured.response.Response;
 import models.fixture.UserFixture;
+import org.springframework.test.context.TestPropertySource;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
+
 
 
 public class TestAPI {
@@ -84,7 +89,7 @@ public class TestAPI {
     //     getProfileInfo.then().body("data.subscription.googleStatus", notNullValue()).statusCode(200);
     }
 
-    public void confirmationRegisterNewUser() {
+    public void postConfirmEmailForNewUser() {
 
         String registerToken = DbUtils.getUserConfirmationToken(UserFixture.EMAIL_FOR_REGISTRATION_TEST.getValue());
 
@@ -92,7 +97,7 @@ public class TestAPI {
                 post("https://t.motorsport.tv/api/usermanagement/confirm-email").then().statusCode(200);
     }
 
-    public void verificationEmailConfirmed() {
+    public void postCheckThatEmailConfirmed() {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")

@@ -13,6 +13,6 @@ public class LocalizedStringStorage {
         return currentLocale == LocaleInfo.Locale.EN ? "Male" : "Мужской";
     }
     public String getSuccess_message() {
-        return currentLocale == LocaleInfo.Locale.EN ? "" : "Вы успешно совершили покупку.";
+        return currentLocale == LocaleInfo.Locale.EN ? "You've successfully bought this purchase." : "Вы успешно совершили покупку.";
     }
 }

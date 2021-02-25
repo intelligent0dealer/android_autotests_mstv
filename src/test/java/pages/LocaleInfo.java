@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class LocaleInfo {
     public enum Locale {
-        EN, RU;
+        EN, RU
     }
 
     private Locale currentLocale = null;

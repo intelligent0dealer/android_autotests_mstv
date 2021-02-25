@@ -5,74 +5,59 @@ import models.fixture.UserFixture;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import pages.AndroidProfile;
-import pages.DbUtils.DbUtils;
+import pages.CommonControls;
 import pages.LocaleInfo;
+import pages.ProfilePage.ProfilePage;
+import pages.TabsOfMainPage.HomePage;
 import pages.TestAPI;
 import setUp.SetupConfig;
 
 public class Profile {
     SetupConfig setupConfig = new SetupConfig();
-    AndroidProfile androidProfile = new AndroidProfile(setupConfig.driver);
-    LocalizedStringStorage stringStorage = new LocalizedStringStorage(new LocaleInfo(androidProfile.driver).getInfo());
+    LocalizedStringStorage stringStorage = new LocalizedStringStorage(new LocaleInfo(setupConfig.driver).getInfo());
+    HomePage homePage = new HomePage();
     TestAPI testAPI = new TestAPI();
-    DbUtils dbUtils = new DbUtils();
+    ProfilePage profilePage = new ProfilePage();
+    CommonControls commonControls = new CommonControls(setupConfig.driver);
 
     @Test
-        public void changeName() {
-            androidProfile.openProfile();
-            androidProfile.openSignIn();
-            androidProfile.inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());
-            androidProfile.openSignIn();
-            androidProfile.checkSubscribeAtProfile();
-
-            androidProfile.goToName();
-            androidProfile.inputNameLastDone("Artem", "Morozov");
-            androidProfile.checkNameLast("Artem Morozov");
-            androidProfile.checkSubscribeAtProfile();
+        public void changeNameAndNickName() {
+            homePage.performLoginProcess()
+                    .goToName()
+                    .inputNameLastDone("Artem", "Morozov")
+                    .checkNameLast("Artem Morozov")
+                    .checkProfilePageHasLoaded()
+                    .clickUsername()
+                    .inputUserName(UserFixture.USERNAME_FOR_AUTO_TEST.getValue())
+                    .checkUserName(UserFixture.USERNAME_FOR_AUTO_TEST.getValue());
             testAPI.postClearNameSurname();
-
-            androidProfile.clickUsername();
-            androidProfile.inputUserName(UserFixture.USERNAME_FOR_AUTO_TEST.getValue());
-
-            androidProfile.checkUserName(UserFixture.USERNAME_FOR_AUTO_TEST.getValue());
             testAPI.postClearNickname();
-            androidProfile.checkSubscribeAtProfile();
         }
 
     @Test
         public void changeGender() {
-            androidProfile.openProfile();
-            androidProfile.openSignIn();
-            androidProfile.inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());
-            androidProfile.openSignIn();
-            androidProfile.checkSubscribeAtProfile();
-            androidProfile.clickGender();
-            androidProfile.chooseGender();
+            homePage.performLoginProcess()
+                    .clickGender()
+                    .chooseGender()
+                    .checkProfilePageHasLoaded()
+                    .checkGender(stringStorage.getMale_gender());
 
-            androidProfile.checkSubscribeAtProfile();
-            androidProfile.checkGender(stringStorage.getMale_gender());
             testAPI.postClearToOtherGender();
         }
 
     @Test
         public void changePassword() {
-            androidProfile.openProfile();
-            androidProfile.openSignIn();
-            androidProfile.inputLogPass(UserFixture.EMAIL_FOR_CHANGE_PASS_TEST.getValue(), UserFixture.PASSWORD_FOR_CHANGE_PASS_TEST.getValue());
-            androidProfile.openSignIn();
-            androidProfile.checkSubscribeAtProfile();
+            homePage.performLoginProcess()
+                    .changePasswordSuite(UserFixture.PASSWORD_FOR_CHANGE_PASS_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue())
+                    .checkProfilePageHasLoaded();
 
-            androidProfile.changePasswordSuite(UserFixture.PASSWORD_FOR_CHANGE_PASS_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());
+            commonControls.scrollToBottom();
 
-            androidProfile.checkSubscribeAtProfile();
-
-            androidProfile.scrollToBottom();
-            androidProfile.signOut();
-            androidProfile.openSignIn();
-            androidProfile.inputLogPass(UserFixture.EMAIL_FOR_CHANGE_PASS_TEST.getValue(),UserFixture.PASSWORD_FOR_API_TEST.getValue());
-            androidProfile.openSignIn();
-            androidProfile.changePasswordSuite(UserFixture.PASSWORD_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_CHANGE_PASS_TEST.getValue());
+            profilePage.signOut()
+                       .openSignIn()
+                       .inputLogPass(UserFixture.EMAIL_FOR_CHANGE_PASS_TEST.getValue(),UserFixture.PASSWORD_FOR_API_TEST.getValue())
+                       .pressSignInButton()
+                       .changePasswordSuite(UserFixture.PASSWORD_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_CHANGE_PASS_TEST.getValue());
         }
 
     @AfterMethod

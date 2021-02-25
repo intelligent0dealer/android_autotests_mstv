@@ -4,53 +4,61 @@ import models.fixture.UserFixture;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import pages.AndroidProfile;
+import pages.CommonControls;
 import pages.DbUtils.DbUtils;
+import pages.EpisodeView.PayPerViewEpisodePage;
+import pages.TabsOfMainPage.HomePage;
 import pages.TestAPI;
 import setUp.SetupConfig;
 
 
 public class PPV {
     SetupConfig setupConfig = new SetupConfig();
-    AndroidProfile androidProfile = new AndroidProfile(setupConfig.driver);
+    HomePage homePage = new HomePage();
     DbUtils dbUtils = new DbUtils();
     TestAPI testAPI = new TestAPI();
+    CommonControls commonControls = new CommonControls(setupConfig.driver);
+    PayPerViewEpisodePage payPerViewEpisodePage = new PayPerViewEpisodePage();
+
+
 
     @Test
     public void buyPPV(){
-        androidProfile.openProfile();
-        androidProfile.openSignIn();
-        androidProfile.inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());
-        androidProfile.openSignIn();
-        androidProfile.checkSubscribeAtProfile();
-        androidProfile.pressBackButton();
-        androidProfile.pressSearchButton();
-        androidProfile.searchPPVEpisode();
-        androidProfile.tapOnEpisodePPV();
-        androidProfile.checkThatAtPPVPage();
-        androidProfile.scrollToBottom();
-        androidProfile.buyPPV();
-        androidProfile.buyPPVGoogle();
-        androidProfile.checkPurchasePPVView();
+
+        homePage.performLoginProcess();
+
+        commonControls.pressBackButton();
+
+        homePage.pressSearchButton();
+        commonControls.inputTextAndSearchByKeyButton(UserFixture.NAME_OF_PPV_EPISODE.getValue())
+                .tapOnEpisodePPV()
+                .checkThatAtPPVPage();
+
+        commonControls.scrollToBottom();
+        payPerViewEpisodePage.buyPPV();
+        commonControls.buyPPVGoogle();
+
+        payPerViewEpisodePage.checkPurchasePPVView();
         testAPI.checkPPVAccessPermanent();
     }
     @Test
         public void rentPPV() {
-        androidProfile.openProfile();
-        androidProfile.openSignIn();
-        androidProfile.inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue());
-        androidProfile.openSignIn();
-        androidProfile.checkSubscribeAtProfile();
-        androidProfile.pressBackButton();
-        androidProfile.pressSearchButton();
-        androidProfile.searchPPVEpisode();
-        androidProfile.tapOnEpisodePPV();
-        androidProfile.checkThatAtPPVPage();
-        androidProfile.scrollToBottom();
-        androidProfile.rentPPV();
-        androidProfile.buyPPVGoogle();
-        androidProfile.checkPPVCodeInfo();
-        androidProfile.clickPPVActivationButton();
+        homePage.performLoginProcess();
+
+        commonControls.pressBackButton();
+        homePage.pressSearchButton();
+        commonControls.inputTextAndSearchByKeyButton(UserFixture.NAME_OF_PPV_EPISODE.getValue())
+                .tapOnEpisodePPV()
+                .checkThatAtPPVPage();
+
+        commonControls.scrollToBottom();
+        payPerViewEpisodePage.rentPPV();
+        commonControls.buyPPVGoogle();
+
+        payPerViewEpisodePage.checkPPVCodeInfo();
+
+        payPerViewEpisodePage.clickPPVActivationButton();
+
         testAPI.checkPPVAccessRent();
     }
     @AfterMethod
