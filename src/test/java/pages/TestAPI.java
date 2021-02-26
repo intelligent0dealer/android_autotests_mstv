@@ -1,14 +1,9 @@
 package pages;
 
-import org.json.*;
 import io.restassured.response.Response;
-import models.fixture.UserFixture;
-import org.springframework.test.context.TestPropertySource;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import models.fixture.UserConstants;
 import pages.DbUtils.DbUtils;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -20,8 +15,8 @@ public class TestAPI {
         Response getBearer =
                 given()
                     .contentType("application/x-www-form-urlencoded")
-                    .formParam("email",UserFixture.EMAIL_FOR_API_TEST)
-                    .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
+                    .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
+                    .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                     .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfoNickname =
@@ -38,8 +33,8 @@ public class TestAPI {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("email",UserFixture.EMAIL_FOR_API_TEST)
-                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
+                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
+                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfo =
@@ -56,8 +51,8 @@ public class TestAPI {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("email",UserFixture.EMAIL_FOR_API_TEST)
-                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
+                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
+                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfo =
@@ -75,8 +70,8 @@ public class TestAPI {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("email", UserFixture.EMAIL_FOR_API_TEST.getValue())
-                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST.getValue())
+                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
+                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfo =
@@ -91,7 +86,7 @@ public class TestAPI {
 
     public void postConfirmEmailForNewUser() {
 
-        String registerToken = DbUtils.getUserConfirmationToken(UserFixture.EMAIL_FOR_REGISTRATION_TEST.getValue());
+        String registerToken = DbUtils.getUserConfirmationToken(UserConstants.EMAIL_FOR_REGISTRATION_TEST);
 
         given().param("token", registerToken).
                 post("https://t.motorsport.tv/api/usermanagement/confirm-email").then().statusCode(200);
@@ -101,8 +96,8 @@ public class TestAPI {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("email",UserFixture.EMAIL_FOR_REGISTRATION_TEST)
-                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
+                        .formParam("email", UserConstants.EMAIL_FOR_REGISTRATION_TEST)
+                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         getBearer.then().body("data.user.is_email_confirmed",equalTo(true)).statusCode(200);
     }
@@ -111,8 +106,8 @@ public class TestAPI {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("email",UserFixture.EMAIL_FOR_API_TEST)
-                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
+                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
+                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         Response getProfileInfo =
                 given()
@@ -127,8 +122,8 @@ public class TestAPI {
         Response getBearer =
                 given()
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("email",UserFixture.EMAIL_FOR_API_TEST)
-                        .formParam("password",UserFixture.PASSWORD_FOR_API_TEST)
+                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
+                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         Response getProfileInfo =
                 given()

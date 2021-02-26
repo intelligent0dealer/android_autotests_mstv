@@ -1,30 +1,25 @@
 package test;
 
-import models.fixture.UserFixture;
+import models.fixture.UserConstants;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import pages.CommonControls;
 import pages.EpisodeView.PayPerViewEpisodePage;
 import pages.ProfilePage.ProfilePage;
-import pages.SignInPage;
 import pages.TabsOfMainPage.HomePage;
 import setUp.SetupConfig;
 
 
 public class SignInTest {
     SetupConfig setupConfig = new SetupConfig();
-    PayPerViewEpisodePage payPerViewEpisodePage = new PayPerViewEpisodePage();
-    HomePage homePage = new HomePage();
-    ProfilePage profilePage = new ProfilePage();
-    SignInPage signInPage = new SignInPage();
-    CommonControls commonControls = new CommonControls(setupConfig.driver);
+    HomePage homePage = new HomePage(setupConfig.driver);
+
 
     @Test
        public void signInFromProfile() {
-            homePage.performLoginProcess();
-            commonControls.scrollToBottom();
-            profilePage.pressSignOut()
+        ProfilePage profilePage = homePage.performLoginProcess();
+                    profilePage.scrollToBottom();
+                    profilePage.pressSignOut()
                         .unloginVerification();
         }
 
@@ -32,7 +27,7 @@ public class SignInTest {
         public void signInFromFeedTab() {
             homePage.myFeedTabClick()
                     .signInButtonClickFromFeedTab()
-                    .inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue())
+                    .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST)
                     .pressSignInButton();
             homePage.openProfile()
                     .checkProfilePageHasLoaded();
@@ -42,37 +37,58 @@ public class SignInTest {
         public void signInFromFeedButton() {
             homePage.goToEpisodeRUregion()
                     .goToInfoInEpisodePage()
-                    .addToMyFeedButtonClick();
-            signInPage.inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue())
-                        .pressSignInButton()
-                        .checkProfilePageHasLoaded();
+                    .addToMyFeedButtonClick()
+                    .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST)
+                    .pressSignInButton()
+                    .checkProfilePageHasLoaded();
         }
 
     @Test
-        public void signInFromPPVPage() {
-            homePage.pressSearchButton();
-            commonControls.inputTextAndSearchByKeyButton(UserFixture.NAME_OF_PPV_EPISODE.getValue())
+        public void signInFromPPVPageBuyButton() {
+           PayPerViewEpisodePage payPerViewEpisodePage =
+                   homePage.pressSearchButton()
+                    .inputTextAndSearchByKeyButton(UserConstants.NAME_OF_PPV_EPISODE)
                     .tapOnEpisodePPV()
                     .checkThatAtPPVPage();
-            commonControls.scrollToBottom();
-            payPerViewEpisodePage.buyPPV();
-            signInPage.inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue())
+           payPerViewEpisodePage.scrollToBottom();
+           payPerViewEpisodePage.buyPPVByNotLoginUser()
+                    .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST)
                     .pressSignInButton();
-            payPerViewEpisodePage.checkThatAtPPVPage();
-            commonControls.backAndroidButtonPressFourTimes()
+           payPerViewEpisodePage.checkThatAtPPVPage()
+                    .backAndroidButtonPressFourTimes()
                     .openProfile()
                     .checkProfilePageHasLoaded();
         }
+
+    @Test
+        public void signInFromPPVPageSubscribeAndWatchButton() {
+           PayPerViewEpisodePage payPerViewEpisodePage =
+                   homePage.pressSearchButton()
+                    .inputTextAndSearchByKeyButton(UserConstants.NAME_OF_PPV_EPISODE)
+                    .tapOnEpisodePPV();
+
+           payPerViewEpisodePage.checkThatAtPPVPage()
+                    .subscribeAndWatchButtonPPV()
+                    .alreadyHaveAnAccSignIn()
+                    .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST)
+                    .pressSignInButton();
+
+           payPerViewEpisodePage.checkThatAtPPVPage()
+                    .backAndroidButtonPressFourTimes()
+                    .openProfile()
+                    .checkProfilePageHasLoaded();
+        }
+
 
     @Test
         public void signInFromRegistrationPage() {
             homePage.openProfile()
                     .openSignUp()
                     .signInButtonFromRegistrationClick()
-                    .inputLogPass(UserFixture.EMAIL_FOR_API_TEST.getValue(), UserFixture.PASSWORD_FOR_API_TEST.getValue())
+                    .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST)
                     .pressSignInButton()
                     .checkProfilePageHasLoaded();
-    }
+        }
 
     @AfterMethod
         public void resetApp() {

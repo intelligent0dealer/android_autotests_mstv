@@ -8,7 +8,6 @@ import pages.ProfilePage.ProfilePage;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.hidden;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static java.lang.Integer.parseInt;
@@ -44,7 +43,7 @@ public class PremiumEpisodePage {
         if (!isSeekBarIsVisible()) {
             $(By.id("tv.motorsport.mobile:id/container_player")).click();
         }
-    } // PremiumEpisodePage
+    }
 
     private String getTimeFromSeekBarTimer() {
         return ($(By.id("tv.motorsport.mobile:id/exo_position")).getText());

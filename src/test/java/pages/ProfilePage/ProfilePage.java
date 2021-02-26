@@ -1,10 +1,13 @@
 package pages.ProfilePage;
 
 import com.codeborne.selenide.SelenideElement;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import pages.ChangeUserData.ChangeNamePage;
 import pages.ChangeUserData.ChangeUserNamePage;
+import pages.PageObject;
 import pages.SignInPage;
 import pages.SignUpPage;
 import pages.SubscriptionPage;
@@ -14,38 +17,42 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
-public  class ProfilePage {
+public  class ProfilePage extends PageObject {
+    public ProfilePage(AppiumDriver<MobileElement> driver) {
+        super(driver);
+    }
+
     public ProfilePage signOut() {
         $(By.id("tv.motorsport.mobile:id/log_out")).click();
-        return new ProfilePage();
+        return this;
     }
 
     public SubscriptionPage clickSubscribe() {
         $(By.id("tv.motorsport.mobile:id/item_subscription")).click();
-        return new SubscriptionPage();
+        return new SubscriptionPage(driver);
     }
 
     public ProfilePage checkProfilePageHasLoaded() {
         $(By.id("tv.motorsport.mobile:id/item_subscription"))
                 .$(By.id("tv.motorsport.mobile:id/tv_description")).shouldBe(exist);
         System.out.println("You're in user profile");
-        return new ProfilePage();
+        return this;
     }
 
     public ChangeNamePage goToName() {
         $(By.id("tv.motorsport.mobile:id/item_name")).click();
-        return new ChangeNamePage();
+        return new ChangeNamePage(driver);
     }
 
     public ProfilePage checkNameLast(String text) {
         $(By.id("tv.motorsport.mobile:id/item_name")).$(By.id("tv.motorsport.mobile:id/tv_description"))
                 .shouldHave(exactText(text),Duration.ofSeconds(5));
-        return new ProfilePage();
+        return this;
     }
 
     public ChangeUserNamePage clickUsername() {
         $(By.id("tv.motorsport.mobile:id/item_username")).$(By.id(("tv.motorsport.mobile:id/title"))).click();
-        return new ChangeUserNamePage();
+        return new ChangeUserNamePage(driver);
     }
 
     public void checkUserName(String username) {
@@ -55,12 +62,12 @@ public  class ProfilePage {
 
     public ProfilePage clickGender() {
         $(By.id("tv.motorsport.mobile:id/item_gender")).click();
-        return new ProfilePage();
+        return this;
     }
 
     public ProfilePage chooseGender() {
         $(By.id("tv.motorsport.mobile:id/gender_chooser_male")).click();
-        return new ProfilePage ();
+        return this;
     }
 
     public void checkGender(String gender) {
@@ -77,7 +84,7 @@ public  class ProfilePage {
         changePassword();
         enterOldNewPass(oldPassword, newPassword);
         checkProfilePageHasLoaded();
-        return new ProfilePage();
+        return this;
     }
     private void enterOldNewPass(String currentpass, String newpass) {
         $(By.id("tv.motorsport.mobile:id/currentPassword")).sendKeys(currentpass);
@@ -88,17 +95,17 @@ public  class ProfilePage {
 
     public ProfilePage pressSignOut() {
         $(By.id("tv.motorsport.mobile:id/log_out")).click();
-        return new ProfilePage();
+        return this;
     }
 
     public SignInPage openSignIn() {
         $(By.id("tv.motorsport.mobile:id/sign_in")).click();
-        return new SignInPage();
+        return new SignInPage(driver);
     }
 
     public SignUpPage openSignUp() {
         $(By.id("tv.motorsport.mobile:id/sign_up")).click();
-        return new SignUpPage();
+        return new SignUpPage(driver);
 
     }
     public void unloginVerification() {
