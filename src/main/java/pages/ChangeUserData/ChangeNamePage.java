@@ -1,6 +1,6 @@
 package pages.ChangeUserData;
 
-import com.codeborne.selenide.Condition;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;

@@ -23,8 +23,10 @@ public class SignUpPage extends PageObject {
         return new SignInPage(driver);
     }
 
-    public RegistrationPage doneReg() {
+    public SubscriptionPage completeRegAndConfirmEmail(TestAPI testAPI) {
         $(By.id("tv.motorsport.mobile:id/register_btn_done")).click();
-        return new RegistrationPage(driver);
+        testAPI.postConfirmEmailForNewUser();
+        testAPI.postCheckThatEmailConfirmed();
+        return new SubscriptionPage(driver);
     }
 }

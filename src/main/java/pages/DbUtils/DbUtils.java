@@ -35,7 +35,7 @@ public class DbUtils {
         return token;
     }
 
-    public  void deleteSubscribe(String email) {
+    public void deleteSubscribe(String email) {
         Connection connection = null;
         String URL_CONTENT = "jdbc:postgresql://psql-cluster.us.testing.motorsport.tv:5433/motorsport_subscription";
 
@@ -76,7 +76,7 @@ public class DbUtils {
         }
     }
 
-    public  void deleteUser(String email) {
+    public void deleteUser(String email) {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -96,7 +96,7 @@ public class DbUtils {
 
     }
 
-    public  void deletePPVCodeAccess(String email) {
+    public void deletePPVCodeAccess(String email) {
         Connection connection = null;
         try {
             String URL_CONTENT = "jdbc:postgresql://psql-cluster.us.testing.motorsport.tv:5433/motorsport_admin";
@@ -105,7 +105,7 @@ public class DbUtils {
 
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
-            String SQL = "SELECT ID FROM users WHERE email = '"+email+"'";
+            String SQL = "SELECT ID FROM users WHERE email = '" + email + "'";
             Integer idUser = null;
             ArrayList<String> idAccessList = new ArrayList<>();
 
@@ -117,7 +117,7 @@ public class DbUtils {
             }
             connection = DriverManager.getConnection(URL_CONTENT, USERNAME_CONTENT, PASSWORD_CONTENT);
             PreparedStatement statementForAccessList = connection.prepareStatement("SELECT * FROM access_list WHERE owner_id = ?");
-            statementForAccessList.setInt(1,idUser);
+            statementForAccessList.setInt(1, idUser);
 
             ResultSet resultSetForAccessList;
             resultSetForAccessList = statementForAccessList.executeQuery();
@@ -130,7 +130,7 @@ public class DbUtils {
             statementForAccessList.executeUpdate();
 
             statementForAccessList = connection.prepareStatement("DELETE FROM transaction_request_payload WHERE transaction_id IN (SELECT id FROM transactions WHERE payer_id = ?)");
-            statementForAccessList.setInt(1,idUser);
+            statementForAccessList.setInt(1, idUser);
             statementForAccessList.executeUpdate();
 
             statementForAccessList = connection.prepareStatement("DELETE FROM transactions WHERE payer_id = ?");
@@ -138,7 +138,7 @@ public class DbUtils {
             statementForAccessList.executeUpdate();
 
             statementForAccessList = connection.prepareStatement("DELETE FROM access_list WHERE id = ANY(?)");
-            statementForAccessList.setArray(1,connection.createArrayOf("integer",idAccessList.toArray()));
+            statementForAccessList.setArray(1, connection.createArrayOf("integer", idAccessList.toArray()));
             statementForAccessList.executeUpdate();
 
         } catch (SQLException e) {

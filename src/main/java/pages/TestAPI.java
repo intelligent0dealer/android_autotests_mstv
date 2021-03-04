@@ -13,14 +13,14 @@ public class TestAPI {
 
     public void postClearNickname() {
         Response getBearer =
-                given()
+                RestAssured.given()
                     .contentType("application/x-www-form-urlencoded")
                     .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
                     .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                     .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfoNickname =
-                given()
+                RestAssured.given()
                     .header("bearer", getBearer.body().jsonPath().getString("data.token"))
                     .contentType("application/x-www-form-urlencoded")
                     .formParam("nickname","ClearedByAutoTests")
@@ -31,14 +31,14 @@ public class TestAPI {
 
     public void postClearToOtherGender() {
         Response getBearer =
-                given()
+                RestAssured.given()
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
                         .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfo =
-                given()
+                RestAssured.given()
                         .header("bearer", getBearer.body().jsonPath().getString("data.token"))
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("gender","Other")
@@ -49,14 +49,14 @@ public class TestAPI {
 
     public void postClearNameSurname() {
         Response getBearer =
-                given()
+                RestAssured.given()
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
                         .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfo =
-                given()
+                RestAssured.given()
                         .header("bearer", getBearer.body().jsonPath().getString("data.token"))
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("firstName","ClearedByAutoTests")
@@ -68,19 +68,19 @@ public class TestAPI {
 
     public void getSubscriptionInfo() {
         Response getBearer =
-                given()
+                RestAssured.given()
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
                         .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfo =
-                given()
+                RestAssured.given()
                         .header("bearer", getBearer.body().jsonPath().getString("data.token"))
                         .contentType("application/x-www-form-urlencoded")
                         .get("https://t.motorsport.tv/api/subscriptionmanagement/front/subscription/active");
 
-        getProfileInfo.then().body("data.subscription.status",notNullValue()).statusCode(200);
+        getProfileInfo.then().body("data.subscription.status", Matchers.notNullValue()).statusCode(200);
     //     getProfileInfo.then().body("data.subscription.googleStatus", notNullValue()).statusCode(200);
     }
 
@@ -88,13 +88,13 @@ public class TestAPI {
 
         String registerToken = DbUtils.getUserConfirmationToken(UserConstants.EMAIL_FOR_REGISTRATION_TEST);
 
-        given().param("token", registerToken).
+        RestAssured.given().param("token", registerToken).
                 post("https://t.motorsport.tv/api/usermanagement/confirm-email").then().statusCode(200);
     }
 
     public void postCheckThatEmailConfirmed() {
         Response getBearer =
-                given()
+                RestAssured.given()
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("email", UserConstants.EMAIL_FOR_REGISTRATION_TEST)
                         .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
@@ -104,13 +104,13 @@ public class TestAPI {
 
     public void checkPPVAccessPermanent() {
         Response getBearer =
-                given()
+                RestAssured.given()
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
                         .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         Response getProfileInfo =
-                given()
+                RestAssured.given()
                         .header("bearer", getBearer.body().jsonPath().getString("data.token"))
                         .contentType("application/x-www-form-urlencoded")
                         .when().get("https://t.motorsport.tv/api/v1/content/info/episode/34417");
@@ -120,13 +120,13 @@ public class TestAPI {
 
     public void checkPPVAccessRent() {
         Response getBearer =
-                given()
+                RestAssured.given()
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
                         .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
                         .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         Response getProfileInfo =
-                given()
+                RestAssured.given()
                         .header("bearer", getBearer.body().jsonPath().getString("data.token"))
                         .contentType("application/x-www-form-urlencoded")
                         .when().get("https://t.motorsport.tv/api/v1/content/info/episode/34417");

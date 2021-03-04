@@ -1,4 +1,4 @@
-package models.fixture;
+package fixture;
 
 import pages.LocaleInfo;
 

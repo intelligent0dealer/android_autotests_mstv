@@ -8,9 +8,9 @@ import pages.EpisodeView.EpisodePage;
 import pages.EpisodeView.PremiumEpisodePage;
 import pages.PageObject;
 import pages.ProfilePage.ProfilePage;
+import pages.SubscriptionPage;
+import pages.TestAPI;
 
-import java.time.Duration;
-import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -41,16 +41,11 @@ public class HomePage extends PageObject {
         $(By.id("tv.motorsport.mobile:id/items")).click();
         return new EpisodePage(driver);
     }
-    private void checkPremiumVideoNameInside() {
-        $(By.className("android.widget.TextView")).$(By.id("tv.motorsport.mobile:id/title"))
-                .shouldHave(text("1960 24 Hours of Le Mans"))
-                .shouldBe(exist, Duration.ofSeconds(10));
-    }
-    public PremiumEpisodePage clickPremiumEpisodeRuAndCheck() {
+
+    public PremiumEpisodePage clickPremiumEpisodeRu() {
         $$(By.id("tv.motorsport.mobile:id/subtitle")).findBy(text("24H Le Mans: The Great History 24H"))
                 .click();
-        checkPremiumVideoNameInside();
-        return new PremiumEpisodePage();
+        return new PremiumEpisodePage(driver);
     }
 
     public ProfilePage performLoginProcess() {
@@ -61,12 +56,11 @@ public class HomePage extends PageObject {
                 .checkProfilePageHasLoaded();
         return new ProfilePage(driver);
     }
-    public ProfilePage performRegistrationProcess() {
+    public SubscriptionPage performRegistrationProcess(TestAPI testAPI) {
         openProfile()
                 .openSignUp()
                 .inputLogPassReg(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .doneReg()
-                .pressExitButton();
-        return new ProfilePage(driver);
+                .completeRegAndConfirmEmail(testAPI);
+        return new SubscriptionPage(driver);
     }
 }
