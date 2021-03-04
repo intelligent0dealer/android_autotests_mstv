@@ -2,7 +2,7 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import models.fixture.UserConstants;
+import fixture.UserConstants;
 import org.openqa.selenium.By;
 import pages.EpisodeView.PayPerViewEpisodePage;
 

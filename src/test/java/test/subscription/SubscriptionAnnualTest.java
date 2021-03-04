@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
 import pages.LocaleInfo;
 import pages.TabsOfMainPage.HomePage;
-import pages.TestAPI;
+import api.TestAPI;
 import setUp.SetupConfig;
 
 public class SubscriptionAnnualTest {

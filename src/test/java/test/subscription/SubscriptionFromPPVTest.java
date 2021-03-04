@@ -8,7 +8,7 @@ import pages.DbUtils.DbUtils;
 import pages.EpisodeView.PayPerViewEpisodePage;
 import pages.LocaleInfo;
 import pages.TabsOfMainPage.HomePage;
-import pages.TestAPI;
+import api.TestAPI;
 import setUp.SetupConfig;
 
 public class SubscriptionFromPPVTest {

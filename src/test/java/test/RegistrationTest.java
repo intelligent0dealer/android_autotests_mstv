@@ -1,5 +1,6 @@
 package test;
 
+import api.TestAPI;
 import fixture.UserConstants;
 import org.springframework.context.annotation.Description;
 import org.testng.annotations.AfterClass;
@@ -7,7 +8,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
 import pages.TabsOfMainPage.HomePage;
-import pages.TestAPI;
 import setUp.SetupConfig;
 
 

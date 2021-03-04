@@ -1,5 +1,6 @@
 package test;
 
+import api.TestAPI;
 import fixture.LocalizedStringStorage;
 import fixture.UserConstants;
 import org.testng.annotations.AfterClass;
@@ -8,7 +9,6 @@ import org.testng.annotations.Test;
 import pages.LocaleInfo;
 import pages.ProfilePage.ProfilePage;
 import pages.TabsOfMainPage.HomePage;
-import pages.TestAPI;
 import setUp.SetupConfig;
 
 public class ProfileTest {

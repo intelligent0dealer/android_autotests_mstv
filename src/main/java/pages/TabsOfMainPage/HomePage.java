@@ -1,15 +1,15 @@
 package pages.TabsOfMainPage;
 
+import fixture.UserConstants;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import models.fixture.UserConstants;
 import org.openqa.selenium.By;
 import pages.EpisodeView.EpisodePage;
 import pages.EpisodeView.PremiumEpisodePage;
 import pages.PageObject;
 import pages.ProfilePage.ProfilePage;
 import pages.SubscriptionPage;
-import pages.TestAPI;
+import api.TestAPI;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;

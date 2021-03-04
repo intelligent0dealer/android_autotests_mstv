@@ -1,12 +1,12 @@
-package pages;
+package api;
 
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import models.fixture.UserConstants;
+import fixture.UserConstants;
+import org.hamcrest.Matchers;
 import pages.DbUtils.DbUtils;
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 
 
 public class TestAPI {
