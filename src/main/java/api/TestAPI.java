@@ -1,8 +1,8 @@
 package api;
 
+import fixture.UserConstants;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import fixture.UserConstants;
 import org.hamcrest.Matchers;
 import pages.DbUtils.DbUtils;
 
@@ -11,35 +11,34 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 public class TestAPI {
 
-    public void postClearNickname() {
-        Response getBearer =
-                RestAssured.given()
-                    .contentType("application/x-www-form-urlencoded")
-                    .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
-                    .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
-                    .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
+    private String getBearer(String email, String pass) {
+        Response authResponse =
+                RestAssured.given()
+                        .contentType("application/x-www-form-urlencoded")
+                        .formParam("email", email)
+                        .formParam("password", pass)
+                        .when().post("https://t.motorsport.tv/api/usermanagement/auth");
+        authResponse.then().statusCode(200);
+        return authResponse.body().jsonPath().getString("data.token");
+    }
+
+    public void postChangeToDefaultNickname(String nickname) {
         Response getProfileInfoNickname =
                 RestAssured.given()
-                    .header("bearer", getBearer.body().jsonPath().getString("data.token"))
+                    .header("bearer",getBearer(UserConstants.EMAIL_FOR_API_TEST,UserConstants.PASSWORD_FOR_API_TEST))
                     .contentType("application/x-www-form-urlencoded")
-                    .formParam("nickname","ClearedByAutoTests")
+                    .formParam("nickname",nickname)
                     .when().post("https://t.motorsport.tv/api/usermanagement/front/user");
                 getProfileInfoNickname.then().statusCode(200);
 
     }
 
     public void postClearToOtherGender() {
-        Response getBearer =
-                RestAssured.given()
-                        .contentType("application/x-www-form-urlencoded")
-                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
-                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
-                        .when().post("https://t.motorsport.tv/api/usermanagement/auth");
 
         Response getProfileInfo =
                 RestAssured.given()
-                        .header("bearer", getBearer.body().jsonPath().getString("data.token"))
+                        .header("bearer", getBearer(UserConstants.EMAIL_FOR_API_TEST,UserConstants.PASSWORD_FOR_API_TEST))
                         .contentType("application/x-www-form-urlencoded")
                         .formParam("gender","Other")
                         .when().post("https://t.motorsport.tv/api/usermanagement/front/user");
@@ -47,36 +46,24 @@ public class TestAPI {
 
     }
 
-    public void postClearNameSurname() {
-        Response getBearer =
-                RestAssured.given()
-                        .contentType("application/x-www-form-urlencoded")
-                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
-                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
-                        .when().post("https://t.motorsport.tv/api/usermanagement/auth");
-
+    public void postChangeToDefaultNameSurname(String names) {
         Response getProfileInfo =
                 RestAssured.given()
-                        .header("bearer", getBearer.body().jsonPath().getString("data.token"))
+                        .header("bearer", getBearer(UserConstants.EMAIL_FOR_API_TEST,UserConstants.PASSWORD_FOR_API_TEST))
                         .contentType("application/x-www-form-urlencoded")
-                        .formParam("firstName","ClearedByAutoTests")
-                        .formParam("lastName","ClearedByAutoTests")
+                        .formParam("firstName",names)
+                        .formParam("lastName",names)
                         .when().post("https://t.motorsport.tv/api/usermanagement/front/user");
         getProfileInfo.then().statusCode(200);
 
     }
 
     public void getSubscriptionInfo() {
-        Response getBearer =
-                RestAssured.given()
-                        .contentType("application/x-www-form-urlencoded")
-                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
-                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
-                        .when().post("https://t.motorsport.tv/api/usermanagement/auth");
+
 
         Response getProfileInfo =
                 RestAssured.given()
-                        .header("bearer", getBearer.body().jsonPath().getString("data.token"))
+                        .header("bearer", getBearer(UserConstants.EMAIL_FOR_API_TEST,UserConstants.PASSWORD_FOR_API_TEST))
                         .contentType("application/x-www-form-urlencoded")
                         .get("https://t.motorsport.tv/api/subscriptionmanagement/front/subscription/active");
 
@@ -103,15 +90,9 @@ public class TestAPI {
     }
 
     public void checkPPVAccessPermanent() {
-        Response getBearer =
-                RestAssured.given()
-                        .contentType("application/x-www-form-urlencoded")
-                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
-                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
-                        .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         Response getProfileInfo =
                 RestAssured.given()
-                        .header("bearer", getBearer.body().jsonPath().getString("data.token"))
+                        .header("bearer", getBearer(UserConstants.EMAIL_FOR_API_TEST,UserConstants.PASSWORD_FOR_API_TEST))
                         .contentType("application/x-www-form-urlencoded")
                         .when().get("https://t.motorsport.tv/api/v1/content/info/episode/34417");
         getProfileInfo.then().body("data.access.granted.permanent",equalTo(true)).statusCode(200);
@@ -119,15 +100,9 @@ public class TestAPI {
     }
 
     public void checkPPVAccessRent() {
-        Response getBearer =
-                RestAssured.given()
-                        .contentType("application/x-www-form-urlencoded")
-                        .formParam("email", UserConstants.EMAIL_FOR_API_TEST)
-                        .formParam("password", UserConstants.PASSWORD_FOR_API_TEST)
-                        .when().post("https://t.motorsport.tv/api/usermanagement/auth");
         Response getProfileInfo =
                 RestAssured.given()
-                        .header("bearer", getBearer.body().jsonPath().getString("data.token"))
+                        .header("bearer", getBearer(UserConstants.EMAIL_FOR_API_TEST,UserConstants.PASSWORD_FOR_API_TEST))
                         .contentType("application/x-www-form-urlencoded")
                         .when().get("https://t.motorsport.tv/api/v1/content/info/episode/34417");
         getProfileInfo.then().body("data.access.granted.permanent",equalTo(false)).statusCode(200);

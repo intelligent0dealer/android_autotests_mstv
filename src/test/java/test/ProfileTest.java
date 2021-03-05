@@ -60,8 +60,8 @@ public class ProfileTest {
     @AfterClass
         public void tearDown () {
 
-        testAPI.postClearNameSurname();
-        testAPI.postClearNickname();
+        testAPI.postChangeToDefaultNameSurname(UserConstants.DEFAULT_NICKNAME);
+        testAPI.postChangeToDefaultNickname(UserConstants.DEFAULT_NICKNAME);
         testAPI.postClearToOtherGender();
 
         setupConfig.driver.quit();
