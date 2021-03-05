@@ -20,7 +20,6 @@ public class PPVTest {
 
 
     @Test
-    @Ignore("Make Logic process after pressing Buy PPV Button")
     public void buyPPV() {
         PayPerViewEpisodePage payPerViewEpisodePage =
                 homePage.performLoginProcess()
