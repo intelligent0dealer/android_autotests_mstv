@@ -9,7 +9,9 @@ import pages.ProfilePage.ProfilePage;
 import pages.TabsOfMainPage.MyFeedPage;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class SubscriptionPage extends PageObject {
     public SubscriptionPage(AppiumDriver<MobileElement> driver) {
@@ -41,6 +43,7 @@ public class SubscriptionPage extends PageObject {
     }
 
     public SubscriptionPage buySubByGoogle() {
+        $$(By.className("android.widget.TextView")).findBy(text("Test card, always approves")).shouldBe(visible);
         $(By.className("android.widget.Button")).shouldHave(text("Subscribe")).click();
         return this;
     }
