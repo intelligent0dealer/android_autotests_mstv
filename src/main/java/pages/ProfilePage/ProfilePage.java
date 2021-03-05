@@ -86,6 +86,7 @@ public  class ProfilePage extends PageObject {
         checkProfilePageHasLoaded();
         return this;
     }
+
     private void enterOldNewPass(String currentpass, String newpass) {
         $(By.id("tv.motorsport.mobile:id/currentPassword")).sendKeys(currentpass);
         $(By.id("tv.motorsport.mobile:id/newPassword")).sendKeys(newpass);
@@ -106,8 +107,8 @@ public  class ProfilePage extends PageObject {
     public SignUpPage openSignUp() {
         $(By.id("tv.motorsport.mobile:id/sign_up")).click();
         return new SignUpPage(driver);
-
     }
+
     public void unloginVerification() {
         $(By.id("tv.motorsport.mobile:id/sign_in")).shouldBe(visible);
     }

@@ -23,6 +23,7 @@ public class PayPerViewEpisodePage extends PageObject {
         $(By.id("tv.motorsport.mobile:id/purchaseOptionBuy")).click();
         return new SignInPage(driver);
     }
+
     public PayPerViewEpisodePage buyPPV() {
         $(By.id("tv.motorsport.mobile:id/purchaseOptionBuy")).click();
         return this;
@@ -46,7 +47,7 @@ public class PayPerViewEpisodePage extends PageObject {
     public PayPerViewEpisodePage checkPPVCodeInfo() {
         $(By.id("tv.motorsport.mobile:id/activationDescription"))
                 .shouldHave(text("You already have a code. You can activate it and start watching the content."))
-                .shouldBe(exist,Duration.ofSeconds(5));
+                .shouldBe(exist, Duration.ofSeconds(5));
         return this;
     }
 

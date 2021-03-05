@@ -1,17 +1,16 @@
 package test.subscription;
 
-import models.fixture.LocalizedStringStorage;
-import models.fixture.UserConstants;
+import fixture.LocalizedStringStorage;
+import fixture.UserConstants;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
 import pages.LocaleInfo;
 import pages.TabsOfMainPage.HomePage;
-import pages.TestAPI;
+import api.TestAPI;
 import setUp.SetupConfig;
 
-
-public class SubscriptionTest {
+public class SubscriptionAnnualTest {
     SetupConfig setupConfig = new SetupConfig();
     TestAPI testAPI = new TestAPI();
     DbUtils dbUtils = new DbUtils();
@@ -19,20 +18,21 @@ public class SubscriptionTest {
     LocalizedStringStorage stringStorage = new LocalizedStringStorage(new LocaleInfo(setupConfig.driver).getInfo());
 
     @Test
-        public void buySubscription() {
+    public void buySubscriptionFromProfileAnnual() {
         homePage.performLoginProcess()
                 .clickSubscribe()
-                .buyMonthlySub()
-                .buyMonthlySubOutsideApp()
+                .buyAnnualSub()
+                .buySubByGoogle()
                 .checkSuccessBuy(stringStorage.getSuccess_message())
-                .clickContinueSubButton()
+                .clickContinueSubButtonFromProfile()
                 .checkProfilePageHasLoaded();
 
         testAPI.getSubscriptionInfo();
         dbUtils.deleteSubscribe(UserConstants.EMAIL_FOR_API_TEST);
     }
+
     @AfterClass
-        public void tearDown() {
-            setupConfig.driver.quit();
+    public void tearDown() {
+        setupConfig.driver.quit();
     }
 }

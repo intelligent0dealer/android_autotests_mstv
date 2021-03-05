@@ -12,12 +12,18 @@ public class PromoPlugPage extends PageObject{
         super(driver);
     }
 
-    public SignUpPage clickJoinAndWatch() {
+    public SignUpPage clickJoinAndWatchByNotLoginUser() {
         $(By.id("tv.motorsport.mobile:id/promoJoinAndWatch")).click();
         return new SignUpPage(driver);
     }
+    public SubscriptionPage clickWatchMore() {
+        $(By.id("tv.motorsport.mobile:id/promoJoinAndWatch")).click();
+        return new SubscriptionPage(driver);
+    }
+
     public SignInPage alreadyHaveAnAccSignIn() {
         $(By.id("tv.motorsport.mobile:id/promoSignIn")).click();
         return new SignInPage(driver);
     }
+
 }

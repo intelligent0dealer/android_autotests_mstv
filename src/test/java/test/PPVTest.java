@@ -1,6 +1,7 @@
 package test;
 
-import models.fixture.UserConstants;
+import api.TestAPI;
+import fixture.UserConstants;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Ignore;
@@ -8,7 +9,6 @@ import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
 import pages.EpisodeView.PayPerViewEpisodePage;
 import pages.TabsOfMainPage.HomePage;
-import pages.TestAPI;
 import setUp.SetupConfig;
 
 
@@ -19,17 +19,15 @@ public class PPVTest {
     TestAPI testAPI = new TestAPI();
 
 
-
-
     @Test
     @Ignore("Make Logic process after pressing Buy PPV Button")
-    public void buyPPV(){
+    public void buyPPV() {
         PayPerViewEpisodePage payPerViewEpisodePage =
-            homePage.performLoginProcess()
-            .pressBackButton()
-            .pressSearchButton()
-            .inputTextAndSearchByKeyButton(UserConstants.NAME_OF_PPV_EPISODE)
-            .tapOnEpisodePPV();
+                homePage.performLoginProcess()
+                        .pressBackButton()
+                        .pressSearchButton()
+                        .inputTextAndSearchByKeyButton(UserConstants.NAME_OF_PPV_EPISODE)
+                        .tapOnEpisodePPV();
 
         payPerViewEpisodePage.checkThatAtPPVPage().scrollToBottom();
         payPerViewEpisodePage.buyPPV().buyPPVGoogle();
@@ -37,8 +35,9 @@ public class PPVTest {
 
         testAPI.checkPPVAccessPermanent();
     }
+
     @Test
-        public void rentPPV() {
+    public void rentPPV() {
         PayPerViewEpisodePage payPerViewEpisodePage =
                 homePage.performLoginProcess()
                         .pressBackButton()
@@ -49,12 +48,13 @@ public class PPVTest {
 
         payPerViewEpisodePage.scrollToBottom();
         payPerViewEpisodePage.rentPPV()
-                             .buyPPVGoogle();
+                .buyPPVGoogle();
         payPerViewEpisodePage.checkPPVCodeInfo()
-                             .clickPPVActivationButton();
+                .clickPPVActivationButton();
 
         testAPI.checkPPVAccessRent();
     }
+
     @AfterMethod
     public void deletePPVAccess() {
         dbUtils.deletePPVCodeAccess(UserConstants.EMAIL_FOR_API_TEST);

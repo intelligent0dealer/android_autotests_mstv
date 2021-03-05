@@ -5,6 +5,7 @@ import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
 import pages.PageObject;
 import pages.SignInPage;
+
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.exist;

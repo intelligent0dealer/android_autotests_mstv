@@ -1,15 +1,13 @@
 package test;
 
-import models.fixture.UserConstants;
+import api.TestAPI;
+import fixture.UserConstants;
 import org.springframework.context.annotation.Description;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
-import pages.ProfilePage.ProfilePage;
-import pages.RegistrationPage;
 import pages.TabsOfMainPage.HomePage;
-import pages.TestAPI;
 import setUp.SetupConfig;
 
 
@@ -24,97 +22,77 @@ public class RegistrationTest {
     @Test
     @Description("Full registration and login by created account")
     public void registrationFromProfilePage() {
-        ProfilePage profilePage =
-                homePage.performRegistrationProcess();
-
-        testAPI.postConfirmEmailForNewUser();
-        testAPI.postCheckThatEmailConfirmed();
-
-        profilePage.openSignIn()
-                .inputLogPass(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .pressSignInButton()
+        homePage.performRegistrationProcess(testAPI)
+                .chooseFreePlan()
+                .clickContinueSubButtonFromProfile()
                 .checkProfilePageHasLoaded();
     }
 
     @Test
     @Description("Duplicate registration method")
     public void registrationAgain() {
-        ProfilePage profilePage =
-            homePage.performRegistrationProcess();
-
-        testAPI.postConfirmEmailForNewUser();
-        testAPI.postCheckThatEmailConfirmed();
-
-        profilePage.openSignIn()
-                .inputLogPass(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .pressSignInButton()
+        homePage.performRegistrationProcess(testAPI)
+                .chooseFreePlan()
+                .clickContinueSubButtonFromProfile()
                 .checkProfilePageHasLoaded();
     }
 
     @Test
     public void registrationFromFeedTab() {
-        ProfilePage profilePage =
         homePage.myFeedTabClick()
                 .clickJoinNowFromFeedTab()
                 .inputLogPassReg(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .doneReg()
-                .pressExitButton();
-
-        testAPI.postConfirmEmailForNewUser();
-        testAPI.postCheckThatEmailConfirmed();
-
-        profilePage.openSignIn()
-                .inputLogPass(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .pressSignInButton()
-                .checkProfilePageHasLoaded();
+                .completeRegAndConfirmEmail(testAPI)
+                .chooseFreePlan()
+                .clickContinueSubButtonFromFeed()
+                .checkTextInEmptyFeedPage();
     }
 
     @Test
     public void registrationFromSignInPage() {
-        ProfilePage profilePage =
-                homePage.openProfile()
+        homePage.openProfile()
                 .openSignIn()
                 .clickSignUpNowFromSignInPage()
                 .inputLogPassReg(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .doneReg()
-                .pressExitButton();
-        testAPI.postConfirmEmailForNewUser();
-        testAPI.postCheckThatEmailConfirmed();
-
-        profilePage.openSignIn()
-                .inputLogPass(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .pressSignInButton()
+                .completeRegAndConfirmEmail(testAPI)
+                .chooseFreePlan()
+                .clickContinueSubButtonFromProfile()
                 .checkProfilePageHasLoaded();
     }
 
     @Test
-    @Description("Test not full. It's test like <premium video checker> ")
     public void registrationFromPremiumEpisode() {
-        homePage.clickPremiumEpisodeRuAndCheck()
+        homePage.clickPremiumEpisodeRu()
+                .checkPremiumVideoNameInside()
                 .waitForAdsPreRollToFinish()
-                .checkPremiumTiming();
+                .checkPremiumTiming()
+                .getPromoPlugPageFromPremiumEpisode()
+                .clickJoinAndWatchByNotLoginUser()
+                .inputLogPassReg(UserConstants.EMAIL_FOR_REGISTRATION_TEST,UserConstants.PASSWORD_FOR_API_TEST)
+                .completeRegAndConfirmEmail(testAPI)
+                .chooseFreePlan()
+                .clickContinueSubButtonFromPremiumEpisode()
+                .checkPremiumVideoNameInside()
+                .pressBackButton()
+                .openProfile()
+                .checkProfilePageHasLoaded();
     }
 
     @Test
     public void registrationFromPPVPage() {
-        RegistrationPage registrationPage =
         homePage.pressSearchButton()
                 .inputTextAndSearchByKeyButton(UserConstants.NAME_OF_PPV_EPISODE)
                 .tapOnEpisodePPV()
                 .checkThatAtPPVPage()
                 .clickSubscribeAndWatchFromPPVPage()
-                .clickJoinAndWatch()
+                .clickJoinAndWatchByNotLoginUser()
                 .inputLogPassReg(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .doneReg();
-
-        testAPI.postConfirmEmailForNewUser();
-        testAPI.postCheckThatEmailConfirmed();
-
-        registrationPage.chooseFreePlan()
-                        .clickContinueSubButton()
-                        .backAndroidButtonPressFourTimes()
-                        .openProfile()
-                        .checkProfilePageHasLoaded();
+                .completeRegAndConfirmEmail(testAPI)
+                .chooseFreePlan()
+                .clickContinueSubButton()
+                .backAndroidButtonPressFourTimes()
+                .openProfile()
+                .checkProfilePageHasLoaded();
     }
 
     @AfterMethod
