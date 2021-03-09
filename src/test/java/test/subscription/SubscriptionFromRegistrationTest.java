@@ -19,8 +19,8 @@ public class SubscriptionFromRegistrationTest {
     @Test
     public void BuySubscriptionFromRegistration() {
         homePage.performRegistrationProcess(testAPI)
-                .buyMonthlySub()
-                .buySubByGoogle()
+                .buyMonthlySub(stringStorage.getMonthlyNameOfPlan())
+                .buySubByGoogle(stringStorage.getGooglepayMessage())
                 .checkSuccessBuy(stringStorage.getSuccess_message())
                 .clickContinueSubButtonFromProfile()
                 .checkProfilePageHasLoaded();

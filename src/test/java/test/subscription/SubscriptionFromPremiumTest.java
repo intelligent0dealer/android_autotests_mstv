@@ -26,8 +26,8 @@ public class SubscriptionFromPremiumTest {
                 .waitForAdsPreRollToFinish()
                 .checkPremiumTimingForBuySubscription()
                 .clickWatchMore()
-                .buyMonthlySub()
-                .buySubByGoogle()
+                .buyMonthlySub(stringStorage.getMonthlyNameOfPlan())
+                .buySubByGoogle(stringStorage.getGooglepayMessage())
                 .checkSuccessBuy(stringStorage.getSuccess_message())
                 .clickContinueSubButtonFromPremiumEpisode()
                 .checkPremiumVideoNameInside();
