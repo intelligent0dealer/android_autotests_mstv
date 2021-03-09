@@ -1,12 +1,12 @@
 package test.subscription;
 
+import api.TestAPI;
 import fixture.LocalizedStringStorage;
 import fixture.UserConstants;
 import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
 import pages.LocaleInfo;
 import pages.TabsOfMainPage.HomePage;
-import api.TestAPI;
 import setUp.SetupConfig;
 
 public class SubscriptionFromRegistrationTest {
@@ -19,9 +19,8 @@ public class SubscriptionFromRegistrationTest {
     @Test
     public void BuySubscriptionFromRegistration() {
         homePage.performRegistrationProcess(testAPI)
-                .buyMonthlySub(stringStorage.getMonthlyNameOfPlan())
-                .buySubByGoogle(stringStorage.getGooglepayMessage())
-                .checkSuccessBuy(stringStorage.getSuccess_message())
+                .confirmBuyMonthlySubProcess(stringStorage.getMonthlyNameOfPlan(),
+                        stringStorage.getGooglepayMessage(), stringStorage.getSuccess_message())
                 .clickContinueSubButtonFromProfile()
                 .checkProfilePageHasLoaded();
         testAPI.getSubscriptionInfo();

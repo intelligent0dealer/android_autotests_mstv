@@ -21,9 +21,7 @@ public class SubscriptionAnnualTest {
     public void buySubscriptionFromProfileAnnual() {
         homePage.performLoginProcess()
                 .clickSubscribe()
-                .buyAnnualSub(stringStorage.getAnnualNameOfPlan())
-                .buySubByGoogle(stringStorage.getGooglepayMessage())
-                .checkSuccessBuy(stringStorage.getSuccess_message())
+                .confirmBuyAnnualSubProcess(stringStorage.getAnnualNameOfPlan(), stringStorage.getGooglepayMessage(), stringStorage.getSuccess_message())
                 .clickContinueSubButtonFromProfile()
                 .checkProfilePageHasLoaded();
 

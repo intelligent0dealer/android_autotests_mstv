@@ -32,13 +32,19 @@ public class SubscriptionPage extends PageObject {
         return new PayPerViewEpisodePage(driver);
     }
 
-    public SubscriptionPage buyMonthlySub(String nameOfPlan) {
+    public SubscriptionPage confirmBuyMonthlySubProcess(String nameOfPlan, String googlePayMessage, String message) {
         $(By.id("tv.motorsport.mobile:id/subscription_tv_name")).shouldHave(text(nameOfPlan)).click();
+        $$(By.className("android.widget.TextView")).findBy(text(googlePayMessage)).shouldBe(visible);
+        $(By.className("android.widget.Button")).shouldHave(text("Subscribe")).click();
+        $(By.id("tv.motorsport.mobile:id/description_tv")).shouldHave(text(message));
         return this;
     }
-    public SubscriptionPage buyAnnualSub(String nameOfPlan) {
+    public SubscriptionPage confirmBuyAnnualSubProcess(String nameOfPlan, String googlePayMessage, String message) {
         $(By.id("tv.motorsport.mobile:id/subscription_scv_plan_annual"))
                 .$(By.id("tv.motorsport.mobile:id/subscription_tv_name")).shouldHave(text(nameOfPlan)).click();
+        $$(By.className("android.widget.TextView")).findBy(text(googlePayMessage)).shouldBe(visible);
+        $(By.className("android.widget.Button")).shouldHave(text("Subscribe")).click();
+        $(By.id("tv.motorsport.mobile:id/description_tv")).shouldHave(text(message));
         return this;
     }
 
