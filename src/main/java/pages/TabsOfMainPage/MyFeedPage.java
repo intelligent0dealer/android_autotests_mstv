@@ -26,10 +26,9 @@ public class MyFeedPage extends PageObject {
         return new SignUpPage(driver);
     }
 
-    public MyFeedPage checkTextInEmptyFeedPage() {
+    public void checkTextInEmptyFeedPage() {
         $(By.id("tv.motorsport.mobile:id/tv_subtitle"))
                 .shouldHave(Condition.text("You don’t have any active feeds. Go to the Racing Series, Channels and Programs and push Add to My Feed."));
         $(By.id("tv.motorsport.mobile:id/tv_title")).shouldBe(Condition.visible);
-        return this;
     }
 }

@@ -4,7 +4,6 @@ import api.TestAPI;
 import fixture.UserConstants;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
 import pages.EpisodeView.PayPerViewEpisodePage;
