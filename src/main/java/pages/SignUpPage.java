@@ -30,4 +30,8 @@ public class SignUpPage extends PageObject {
         testAPI.postCheckThatEmailConfirmed();
         return new SubscriptionPage(driver);
     }
+    public SignUpPage clickToCheckBox() {
+        $(By.id("tv.motorsport.mobile:id/reg_cb_ok")).click();
+        return this;
+    }
 }

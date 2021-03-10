@@ -94,6 +94,17 @@ public class RegistrationTest {
                 .openProfile()
                 .checkProfilePageHasLoaded();
     }
+    @Test
+    public void registrationWithActiveCheckBox() {
+        homePage.openProfile()
+                .openSignUp()
+                .clickToCheckBox()
+                .inputLogPassReg(UserConstants.EMAIL_FOR_REGISTRATION_TEST,UserConstants.PASSWORD_FOR_API_TEST)
+                .completeRegAndConfirmEmail(testAPI)
+                .chooseFreePlan()
+                .clickContinueSubButtonFromProfile()
+                .checkProfilePageHasLoaded();
+    }
 
     @AfterMethod
     @Description("If u want >1 registration")
