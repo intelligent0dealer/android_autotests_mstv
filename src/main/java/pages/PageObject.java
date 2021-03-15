@@ -62,11 +62,4 @@ public abstract class PageObject {
         System.out.println(formattedDateTime);
         return formattedDateTime;
     }
-    public String parseDateToOneFormatFromLivestreamStatus(String datetime) {
-        LocalDateTime localDateTime = LocalDateTime.parse(datetime,ofPattern("MMM dd, yyyy, HH:mm"));
-        String formattedDateTime = localDateTime.format(DateTimeFormatter.ofPattern("MMM dd, yyyy, HH:mm").withLocale(Locale.US));
-        System.out.println(formattedDateTime);
-        return formattedDateTime;
-    }
-
 }
