@@ -10,9 +10,16 @@ import org.openqa.selenium.By;
 import pages.TabsOfMainPage.HomePage;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$;
+import static java.time.format.DateTimeFormatter.*;
 
 public abstract class PageObject {
     public AppiumDriver<MobileElement> driver;
@@ -47,6 +54,19 @@ public abstract class PageObject {
         $(By.className("android.widget.Button")).$(By.id("com.android.vending:id/0_resource_name_obfuscated"))
                 .shouldBe(exist, Duration.ofSeconds(5))
                 .click();
+    }
+    public String parseDateToOneFormat(String datetime) {
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(datetime, ISO_DATE_TIME);
+        ZonedDateTime newZonedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("Asia/Yekaterinburg"));
+        String formattedDateTime = newZonedDateTime.format(DateTimeFormatter.ofPattern("MMM d, yyyy, HH:mm").withLocale(Locale.US));
+        System.out.println(formattedDateTime);
+        return formattedDateTime;
+    }
+    public String parseDateToOneFormatFromLivestreamStatus(String datetime) {
+        LocalDateTime localDateTime = LocalDateTime.parse(datetime,ofPattern("MMM dd, yyyy, HH:mm"));
+        String formattedDateTime = localDateTime.format(DateTimeFormatter.ofPattern("MMM dd, yyyy, HH:mm").withLocale(Locale.US));
+        System.out.println(formattedDateTime);
+        return formattedDateTime;
     }
 
 }

@@ -5,7 +5,12 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import pages.DbUtils.DbUtils;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
+import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 
@@ -35,7 +40,6 @@ public class TestAPI {
     }
 
     public void postClearToOtherGender() {
-
         Response getProfileInfo =
                 RestAssured.given()
                         .header("bearer", getBearer(UserConstants.EMAIL_FOR_API_TEST,UserConstants.PASSWORD_FOR_API_TEST))
@@ -59,8 +63,6 @@ public class TestAPI {
     }
 
     public void getSubscriptionInfo() {
-
-
         Response getProfileInfo =
                 RestAssured.given()
                         .header("bearer", getBearer(UserConstants.EMAIL_FOR_API_TEST,UserConstants.PASSWORD_FOR_API_TEST))
@@ -109,4 +111,22 @@ public class TestAPI {
 
     }
 
+    public String  getInfoAboutLivestreamEpisode() {
+        Response getEpisodeInfo =
+                RestAssured.given()
+                .contentType("application/x-www-form-urlencoded")
+                .when().get("https://t.motorsport.tv/api/content/episode/front/35824");
+        getEpisodeInfo.then().body("data.is_livestream",equalTo(true)).statusCode(200);
+        getEpisodeInfo.then().body("data.is_record_active",equalTo(false)).statusCode(200);
+        return getEpisodeInfo.body().jsonPath().getString("data.livestream_start_datetime");
+    }
+
+    public void getCheckThatLivestreamIsLiveNow() {
+        Response getEpisodeInfo =
+                RestAssured.given()
+                        .contentType("application/x-www-form-urlencoded")
+                        .when().get("https://t.motorsport.tv/api/content/episode/front/35787");
+        getEpisodeInfo.then().body("data.is_livestream",equalTo(true)).statusCode(200);
+        getEpisodeInfo.then().body("data.is_record_active",equalTo(true)).statusCode(200);
+    }
 }

@@ -17,9 +17,15 @@ public class SearchRequestAndResultPage extends PageObject {
     }
 
     public PayPerViewEpisodePage tapOnEpisodePPV() {
-            $(By.id("tv.motorsport.mobile:id/title")).shouldHave(text(UserConstants.NAME_OF_PPV_EPISODE)).click();
-            return new PayPerViewEpisodePage(driver);
-        }
+        $(By.id("tv.motorsport.mobile:id/title")).shouldHave(text(UserConstants.NAME_OF_PPV_EPISODE)).click();
+        return new PayPerViewEpisodePage(driver);
     }
 
+    public ProgramViewPage tapOnProgramWithLivestream() {
+        $(By.id("tv.motorsport.mobile:id/preview"))
+               // .shouldHave(text(UserConstants.PROGRAM_FOR_LIVESTREAM_TESTS).because("Program not found"))
+                .click();
+        return new ProgramViewPage(driver);
+    }
+}
 
