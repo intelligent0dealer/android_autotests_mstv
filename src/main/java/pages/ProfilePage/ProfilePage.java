@@ -16,6 +16,7 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public  class ProfilePage extends PageObject {
     public ProfilePage(AppiumDriver<MobileElement> driver) {
@@ -112,6 +113,12 @@ public  class ProfilePage extends PageObject {
     public void unloginVerification() {
         $(By.id("tv.motorsport.mobile:id/sign_in")).shouldBe(visible);
     }
+
+    public ProfilePage checkThatElementOnPageAndTextInside(String text) {
+        $$(By.className("android.widget.TextView")).findBy(text(text)).shouldBe(visible);
+        return this;
+    }
+
 
 
 
