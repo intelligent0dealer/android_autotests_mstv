@@ -22,8 +22,8 @@ public class SubscriptionFromProfileTest {
     public void buySubscription() {
         homePage.performLoginProcess()
                 .clickSubscribe()
-                .buyMonthlySub()
-                .buySubByGoogle()
+                .buyMonthlySub(stringStorage.getMonthlyNameOfPlan())
+                .buySubByGoogle(stringStorage.getGooglepayMessage())
                 .checkSuccessBuy(stringStorage.getSuccess_message())
                 .clickContinueSubButtonFromProfile()
                 .checkProfilePageHasLoaded();

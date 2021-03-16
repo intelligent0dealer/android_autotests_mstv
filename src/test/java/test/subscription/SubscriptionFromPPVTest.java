@@ -29,8 +29,8 @@ public class SubscriptionFromPPVTest {
                         .checkThatAtPPVPage();
         payPerViewEpisodePage.subscribeAndWatchButtonPPV()
                 .clickWatchMore()
-                .buyMonthlySub()
-                .buySubByGoogle()
+                .buyMonthlySub(stringStorage.getMonthlyNameOfPlan())
+                .buySubByGoogle(stringStorage.getGooglepayMessage())
                 .checkSuccessBuy(stringStorage.getSuccess_message())
                 .clickContinueSubButton()
                 .checkPPVCodeInfo();
