@@ -52,7 +52,7 @@ public abstract class PageObject {
     }
     public void buyPPVGoogle() {
         $(By.className("android.widget.Button")).$(By.id("com.android.vending:id/0_resource_name_obfuscated"))
-                .shouldBe(exist, Duration.ofSeconds(5))
+                .shouldBe(exist.because("buying button from google not found"), Duration.ofSeconds(5))
                 .click();
     }
     public String parseDateToOneFormat(String datetime) {

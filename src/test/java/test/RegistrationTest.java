@@ -67,7 +67,7 @@ public class RegistrationTest {
                 .waitForAdsPreRollToFinish()
                 .checkPremiumTiming()
                 .getPromoPlugPageFromPremiumEpisode()
-                .clickJoinAndWatchByNotLoginUser()
+                .clickWatchMoreByNotLoginUser()
                 .inputLogPassReg(UserConstants.EMAIL_FOR_REGISTRATION_TEST,UserConstants.PASSWORD_FOR_API_TEST)
                 .completeRegAndConfirmEmail(testAPI)
                 .chooseFreePlan()
