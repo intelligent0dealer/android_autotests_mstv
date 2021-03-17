@@ -48,7 +48,7 @@ public class ProfileTest {
         profilePage.scrollToBottom();
         profilePage.signOut()
                 .openSignIn()
-                .inputLogPass(UserConstants.EMAIL_FOR_CHANGE_PASS_TEST, UserConstants.PASSWORD_FOR_CHANGE_PASS_TEST)
+                .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_CHANGE_PASS_TEST)
                 .pressSignInButton()
                 .changePasswordSuite(UserConstants.PASSWORD_FOR_CHANGE_PASS_TEST, UserConstants.PASSWORD_FOR_API_TEST);
     }
