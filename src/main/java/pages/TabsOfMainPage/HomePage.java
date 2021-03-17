@@ -43,7 +43,7 @@ public class HomePage extends PageObject {
     }
 
     public PremiumEpisodePage clickPremiumEpisodeRu() {
-        $$(By.id("tv.motorsport.mobile:id/subtitle")).findBy(text("24H Le Mans: The Great History 24H"))
+        $$(By.id("tv.motorsport.mobile:id/subtitle")).findBy(text("24H Le Mans: The Great History 24H").because("episode not found"))
                 .click();
         return new PremiumEpisodePage(driver);
     }

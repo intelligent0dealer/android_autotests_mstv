@@ -9,4 +9,7 @@ public class UserConstants {
     public static final String EMAIL_FOR_CHANGE_PASS_TEST = "intelligent.dealer1605+59@gmail.com";
     public static final String PASSWORD_FOR_CHANGE_PASS_TEST = "12345678";
     public static final String DEFAULT_NICKNAME = "CLEARED BY AUTOTESTS";
+    public static final String PROGRAM_FOR_LIVESTREAM_TESTS = "Program for Autotests";
+    public static final String ID_OF_FUTURE_LIVESTREAM = "35824";
+    public static final String ID_OF_PPV_EPISODE_FOR_AUTOTESTS = "34417";
 }

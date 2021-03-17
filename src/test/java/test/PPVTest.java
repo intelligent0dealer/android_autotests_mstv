@@ -31,7 +31,7 @@ public class PPVTest {
         payPerViewEpisodePage.buyPPV().buyPPVGoogle();
         payPerViewEpisodePage.checkPurchasePPVView();
 
-        testAPI.checkPPVAccessPermanent();
+        testAPI.checkPPVAccessPermanent(UserConstants.ID_OF_PPV_EPISODE_FOR_AUTOTESTS);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PPVTest {
         payPerViewEpisodePage.checkPPVCodeInfo()
                 .clickPPVActivationButton();
 
-        testAPI.checkPPVAccessRent();
+        testAPI.checkPPVAccessRent(UserConstants.ID_OF_PPV_EPISODE_FOR_AUTOTESTS);
     }
 
     @AfterMethod

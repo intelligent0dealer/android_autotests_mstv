@@ -1,25 +1,27 @@
 package test;
 
 import api.TestAPI;
+import fixture.UserConstants;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.DbUtils.DbUtils;
+import pages.ProgramViewPage;
 import pages.TabsOfMainPage.HomePage;
 import setUp.SetupConfig;
 
 public class LivestreamsTest {
-
     SetupConfig setupConfig = new SetupConfig();
     HomePage homePage = new HomePage(setupConfig.driver);
     TestAPI testAPI = new TestAPI();
 
     @Test
     public void livestreamDates() {
-        /*
-        Open live tab
-        Check that livestream is visible
-        Make request in Episode API
-        Parse Info of Livestream
-        Compare dates and status between api and app
-         */
+        ProgramViewPage programViewPage =
+        homePage.pressSearchButton()
+                .inputTextAndSearchByKeyButton("Program for Autotests")
+                .tapOnProgramWithLivestream()
+                .checkTitleOfProgram();
+        String statusApi = programViewPage.parseDateToOneFormat(testAPI.getInfoAboutLivestreamEpisode(UserConstants.ID_OF_FUTURE_LIVESTREAM));
+        String statusApp = programViewPage.checkAndGetStatusOfFutureLivestream();
+        Assert.assertEquals(statusApp, statusApi);
     }
 }

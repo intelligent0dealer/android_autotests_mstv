@@ -16,6 +16,10 @@ public class PromoPlugPage extends PageObject{
         $(By.id("tv.motorsport.mobile:id/promoJoinAndWatch")).click();
         return new SignUpPage(driver);
     }
+    public SignUpPage clickWatchMoreByNotLoginUser() {
+        $(By.id("tv.motorsport.mobile:id/watchMore")).click();
+        return new SignUpPage(driver);
+    }
     public SubscriptionPage clickWatchMore() {
         $(By.id("tv.motorsport.mobile:id/promoJoinAndWatch")).click();
         return new SubscriptionPage(driver);
