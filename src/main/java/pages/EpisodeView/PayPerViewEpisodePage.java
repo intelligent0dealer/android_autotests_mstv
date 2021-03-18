@@ -35,7 +35,7 @@ public class PayPerViewEpisodePage extends PageObject {
     }
 
     public PayPerViewEpisodePage checkThatAtPPVPage() {
-        $(By.id("tv.motorsport.mobile:id/purchaseOptionSubscribe")).shouldBe(exist, Duration.ofSeconds(15));
+        $(By.id("tv.motorsport.mobile:id/purchaseOptionSubscribe")).shouldBe(exist);
         System.out.println("You're in PPV Episode Page");
         return this;
     }

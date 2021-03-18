@@ -9,7 +9,9 @@ import pages.SignInPage;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class EpisodePage extends PageObject {
 
@@ -18,7 +20,7 @@ public class EpisodePage extends PageObject {
     }
 
     public EpisodePage goToInfoInEpisodePage() {
-        $(By.className("androidx.appcompat.app.ActionBar$Tab")).$(By.linkText("Info")).shouldBe(exist, Duration.ofSeconds(15)).click();
+        $$(By.className("androidx.appcompat.app.ActionBar$Tab")).last().click();
         return this;
     }
 

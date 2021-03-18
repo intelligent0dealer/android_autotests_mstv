@@ -5,6 +5,7 @@ import io.appium.java_client.MobileElement;
 import fixture.UserConstants;
 import org.openqa.selenium.By;
 import pages.EpisodeView.PayPerViewEpisodePage;
+import pages.TabsOfMainPage.HomePage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -27,5 +28,6 @@ public class SearchRequestAndResultPage extends PageObject {
                 .click();
         return new ProgramViewPage(driver);
     }
+
 }
 

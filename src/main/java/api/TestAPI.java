@@ -23,7 +23,8 @@ public class TestAPI {
                 RestAssured.given(requestSpec)
                         .formParam("email", email)
                         .formParam("password", pass)
-                        .when().post(Endpoints.AUTH);
+                        .when()
+                        .post(Endpoints.AUTH);
         authResponse.then().statusCode(200);
         return authResponse.body().jsonPath().getString("data.token");
     }

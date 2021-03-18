@@ -62,19 +62,17 @@ public class SignInTest {
 
     @Test
     public void signInFromPPVPageSubscribeAndWatchButton() {
-        PayPerViewEpisodePage payPerViewEpisodePage =
-                homePage.pressSearchButton()
-                        .inputTextAndSearchByKeyButton(UserConstants.NAME_OF_PPV_EPISODE)
-                        .tapOnEpisodePPV();
 
-        payPerViewEpisodePage.checkThatAtPPVPage()
+        homePage.pressSearchButton()
+                .inputTextAndSearchByKeyButton(UserConstants.NAME_OF_PPV_EPISODE)
+                .tapOnEpisodePPV()
+                .checkThatAtPPVPage()
                 .subscribeAndWatchButtonPPV()
                 .alreadyHaveAnAccSignIn()
                 .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .pressSignInButton();
-
-        payPerViewEpisodePage.checkThatAtPPVPage()
+                .pressSignInButton()
                 .backAndroidButtonPressFourTimes()
+                .tapBackButtonInSearch()
                 .openProfile()
                 .checkProfilePageHasLoaded();
     }
