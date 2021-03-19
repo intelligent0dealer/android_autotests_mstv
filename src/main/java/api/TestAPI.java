@@ -146,7 +146,6 @@ public class TestAPI {
                 .then()
                 .statusCode(200)
                 .body("data.is_livestream", equalTo(true))
-                .body("data.is_record_active", equalTo(false));
-
+                .body("data.is_record_active", equalTo(true));
     }
 }

@@ -45,6 +45,10 @@ public abstract class PageObject {
         driver.navigate().back();
         return new HomePage(driver);
     }
+    public HomePage pressAndroidBackButton() {
+        driver.navigate().back();
+        return new HomePage(driver);
+    }
     public HomePage tapBackButtonInSearch() {
         $(By.className("android.widget.ImageButton")).click();
         return new HomePage(driver);

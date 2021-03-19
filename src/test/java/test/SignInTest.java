@@ -39,7 +39,9 @@ public class SignInTest {
                 .goToInfoInEpisodePage()
                 .addToMyFeedButtonClick()
                 .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST)
-                .pressSignInButton()
+                .pressSignInButtonAfterPressFeedButton()
+                .pressAndroidBackButton().pressAndroidBackButton()
+                .openProfile()
                 .checkProfilePageHasLoaded();
     }
 

@@ -3,6 +3,7 @@ package pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
+import pages.EpisodeView.EpisodePage;
 import pages.ProfilePage.ProfilePage;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -22,6 +23,10 @@ public class SignInPage extends PageObject {
     public ProfilePage pressSignInButton() {
         $(By.id("tv.motorsport.mobile:id/sign_in")).click();
         return new ProfilePage(driver);
+    }
+    public EpisodePage pressSignInButtonAfterPressFeedButton() {
+        $(By.id("tv.motorsport.mobile:id/sign_in")).click();
+        return new EpisodePage(driver);
     }
 
     public SignUpPage clickSignUpNowFromSignInPage() {

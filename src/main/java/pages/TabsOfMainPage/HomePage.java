@@ -63,7 +63,7 @@ public class HomePage extends PageObject {
                 .completeRegAndConfirmEmail(testAPI);
         return new SubscriptionPage(driver);
     }
-    public LiveTabPage clickToLiveTab() {
+    public LiveTabPage openLiveTab() {
         $(By.id("tv.motorsport.mobile:id/live_dest")).click();
         return new LiveTabPage(driver);
     }
