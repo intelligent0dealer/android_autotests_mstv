@@ -1,9 +1,10 @@
 package test;
 
 import fixture.LocalizedStringStorage;
+import org.springframework.context.annotation.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import pages.LocaleInfo;
+import fixture.LocaleInfo;
 import pages.TabsOfMainPage.HomePage;
 import setUp.SetupConfig;
 
@@ -13,6 +14,7 @@ public class LocalizationTest {
     LocalizedStringStorage stringStorage = new LocalizedStringStorage(new LocaleInfo(setupConfig.driver).getInfo());
 
     @Test
+    @Description("Sign Up page too")
     public void checkProfileByUnloginUser() {
         homePage.openProfile()
                 .checkThatElementOnPageAndTextInside(stringStorage.getNameOfProfilePage())
@@ -20,8 +22,14 @@ public class LocalizationTest {
                 .checkThatElementOnPageAndTextInside(stringStorage.getNameOfContactUsButton())
                 .checkThatElementOnPageAndTextInside(stringStorage.getNameOfLegalInfo())
                 .checkThatElementOnPageAndTextInside(stringStorage.getNameOfVersionView())
-                .checkThatElementOnPageAndTextInside(stringStorage.getNameOfSignUpButton())
-                .checkThatElementOnPageAndTextInside(stringStorage.getNameOfSignInButton());
+                .checkSignIn(stringStorage.getNameOfSignInButton())
+                .checkSignUp(stringStorage.getNameOfSignUpButton())
+                .openSignUp()
+                .checkDescription(stringStorage.getRegOkDescription())
+                .checkEmailField(stringStorage.mailField())
+                .checkPassField(stringStorage.passField())
+                .checkConfirmPassField(stringStorage.passRepeatField())
+                .checkContinueButton(stringStorage.continueButton());
     }
     @AfterMethod
     public void resetApp() {

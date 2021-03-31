@@ -114,10 +114,19 @@ public  class ProfilePage extends PageObject {
         $(By.id("tv.motorsport.mobile:id/sign_in")).shouldBe(visible);
     }
 
+    public ProfilePage checkSignIn(String text) {
+        $(By.id("tv.motorsport.mobile:id/sign_in")).shouldHave(text(text));
+        return this;
+    }
+    public ProfilePage checkSignUp(String text) {
+        $(By.id("tv.motorsport.mobile:id/sign_up")).shouldHave(text(text));
+        return this;
+    }
     public ProfilePage checkThatElementOnPageAndTextInside(String text) {
         $$(By.className("android.widget.TextView")).findBy(text(text)).shouldBe(visible);
         return this;
     }
+
 
 
 

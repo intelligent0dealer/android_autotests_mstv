@@ -6,7 +6,7 @@ import fixture.UserConstants;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import pages.LocaleInfo;
+import fixture.LocaleInfo;
 import pages.ProfilePage.ProfilePage;
 import pages.TabsOfMainPage.HomePage;
 import setUp.SetupConfig;

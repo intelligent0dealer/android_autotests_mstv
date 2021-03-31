@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
@@ -34,4 +35,25 @@ public class SignUpPage extends PageObject {
         $(By.id("tv.motorsport.mobile:id/reg_cb_ok")).click();
         return this;
     }
+    public SignUpPage checkDescription(String text) {
+        $(By.id("tv.motorsport.mobile:id/reg_tv_ok_description")).shouldHave(Condition.text(text));
+        return this;
+    }
+    public SignUpPage checkEmailField(String text) {
+        $(By.id("tv.motorsport.mobile:id/register_tiet_email")).shouldHave(Condition.text(text));
+        return this;
+    }
+    public SignUpPage checkPassField(String text) {
+        $(By.id("tv.motorsport.mobile:id/register_tiet_password")).shouldHave(Condition.text(text));
+        return this;
+    }
+    public SignUpPage checkConfirmPassField(String text) {
+        $(By.id("tv.motorsport.mobile:id/register_tiet_confirm_password")).shouldHave(Condition.text(text));
+        return this;
+    }
+    public SignUpPage checkContinueButton(String text) {
+        $(By.id("tv.motorsport.mobile:id/register_btn_done")).shouldHave(Condition.text(text));
+        return this;
+    }
+
 }

@@ -4,7 +4,7 @@ import fixture.LocalizedStringStorage;
 import fixture.UserConstants;
 import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
-import pages.LocaleInfo;
+import fixture.LocaleInfo;
 import pages.TabsOfMainPage.HomePage;
 import api.TestAPI;
 import setUp.SetupConfig;

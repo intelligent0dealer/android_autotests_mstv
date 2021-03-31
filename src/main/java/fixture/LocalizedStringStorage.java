@@ -1,7 +1,5 @@
 package fixture;
 
-import pages.LocaleInfo;
-
 public class LocalizedStringStorage {
     private final LocaleInfo.Locale currentLocale;
 
@@ -55,6 +53,24 @@ public class LocalizedStringStorage {
 
     public String getNameOfSignInButton() {
         return currentLocale == LocaleInfo.Locale.EN ? "SIGN IN" : "ВОЙТИ";
+    }
+    public String getRegOkDescription() {
+        return currentLocale == LocaleInfo.Locale.EN ? "Please send me Motorsport.tv newsletters, and occasional" +
+                " communication from Motorsport Network featuring your favorite content, " +
+                "exclusive offers and other information." : "Я согласен/согласна получать рассылку " +
+                "от Моторспорт.тв и периодические сообщения от Motorsport Network об избранном контенте, эксклюзивных предложениях и др.";
+    }
+    public String mailField() {
+        return currentLocale == LocaleInfo.Locale.EN ? "Email" : "Электронная почта";
+    }
+    public String passField() {
+        return currentLocale == LocaleInfo.Locale.EN ? "Password" : "Пароль";
+    }
+    public String passRepeatField() {
+        return currentLocale == LocaleInfo.Locale.EN ? "Confirm Password" : "Подтвердить пароль";
+    }
+    public String continueButton() {
+        return currentLocale == LocaleInfo.Locale.EN ? "Continue" : "Продолжить";
     }
 
 

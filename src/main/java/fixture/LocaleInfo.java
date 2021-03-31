@@ -1,4 +1,4 @@
-package pages;
+package fixture;
 
 import com.google.common.collect.Lists;
 import io.appium.java_client.AppiumDriver;

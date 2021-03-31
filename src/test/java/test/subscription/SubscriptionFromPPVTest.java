@@ -6,7 +6,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import pages.DbUtils.DbUtils;
 import pages.EpisodeView.PayPerViewEpisodePage;
-import pages.LocaleInfo;
+import fixture.LocaleInfo;
 import pages.TabsOfMainPage.HomePage;
 import api.TestAPI;
 import setUp.SetupConfig;
