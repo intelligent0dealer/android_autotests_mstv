@@ -25,15 +25,10 @@ public class LocaleInfo {
             args.put("command", "getprop");
             args.put("args", Lists.newArrayList("persist.sys.locale"));
             String output = (String) driver.executeScript("mobile: shell", args);
-            switch (output) {
-                case "ru_RU": {
-                    currentLocale = Locale.RU;
-                    break;
-                }
-                default: {
-                    currentLocale = Locale.EN;
-                    break;
-                }
+            if (output.contains("ru-RU")) {
+                currentLocale = Locale.RU;
+            } else {
+                currentLocale = Locale.EN;
             }
         }
         return currentLocale;

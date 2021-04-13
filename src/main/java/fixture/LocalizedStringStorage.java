@@ -52,6 +52,7 @@ public class LocalizedStringStorage {
     }
 
     public String getNameOfSignInButton() {
+        System.out.println(currentLocale);
         return currentLocale == LocaleInfo.Locale.EN ? "SIGN IN" : "ВОЙТИ";
     }
     public String getRegOkDescription() {

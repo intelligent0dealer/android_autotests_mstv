@@ -17,11 +17,11 @@ public class LocalizationTest {
     @Description("Sign Up page too")
     public void checkProfileByUnloginUser() {
         homePage.openProfile()
-                .checkThatElementOnPageAndTextInside(stringStorage.getNameOfProfilePage())
+      /*          .checkThatElementOnPageAndTextInside(stringStorage.getNameOfProfilePage())
                 .checkThatElementOnPageAndTextInside(stringStorage.getNameOfRegionButton())
                 .checkThatElementOnPageAndTextInside(stringStorage.getNameOfContactUsButton())
                 .checkThatElementOnPageAndTextInside(stringStorage.getNameOfLegalInfo())
-                .checkThatElementOnPageAndTextInside(stringStorage.getNameOfVersionView())
+                .checkThatElementOnPageAndTextInside(stringStorage.getNameOfVersionView()) */
                 .checkSignIn(stringStorage.getNameOfSignInButton())
                 .checkSignUp(stringStorage.getNameOfSignUpButton())
                 .openSignUp()
