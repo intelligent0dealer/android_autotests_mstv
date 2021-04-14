@@ -73,6 +73,10 @@ public class LocalizedStringStorage {
     public String continueButton() {
         return currentLocale == LocaleInfo.Locale.EN ? "Continue" : "Продолжить";
     }
-
+    public String textFromEmptyFeedPage() {
+        return currentLocale == LocaleInfo.Locale.EN ? "You don't have any active feeds." +
+                " Go to the Racing Series, Channels and Programs and push Add to My Feed" :
+                "У Вас ещё нет избранного контента. Зайдите в разделы Гоночные серии, Каналы и Программы и нажмите Подписаться";
+     }
 
 }

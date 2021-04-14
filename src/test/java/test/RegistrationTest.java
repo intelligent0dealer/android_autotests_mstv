@@ -1,6 +1,8 @@
 package test;
 
 import api.TestAPI;
+import fixture.LocaleInfo;
+import fixture.LocalizedStringStorage;
 import fixture.UserConstants;
 import org.springframework.context.annotation.Description;
 import org.testng.annotations.AfterClass;
@@ -17,6 +19,7 @@ public class RegistrationTest {
     TestAPI testAPI = new TestAPI();
     DbUtils dbUtils = new DbUtils();
     HomePage homePage = new HomePage(setupConfig.driver);
+    LocalizedStringStorage stringStorage = new LocalizedStringStorage(new LocaleInfo(setupConfig.driver).getInfo());
 
 
     @Test(alwaysRun = true)
@@ -45,7 +48,7 @@ public class RegistrationTest {
                 .completeRegAndConfirmEmail(testAPI)
                 .chooseFreePlan()
                 .clickContinueSubButtonFromFeed()
-                .checkTextInEmptyFeedPage();
+                .checkTextInEmptyFeedPage(stringStorage.textFromEmptyFeedPage());
     }
 
     @Test
@@ -106,7 +109,7 @@ public class RegistrationTest {
                 .checkProfilePageHasLoaded();
     }
 
-    @AfterMethod
+    @AfterMethod (alwaysRun = true)
     @Description("If u want >1 registration")
     public void deleteNewUser() {
         dbUtils.deleteUser(UserConstants.EMAIL_FOR_REGISTRATION_TEST);

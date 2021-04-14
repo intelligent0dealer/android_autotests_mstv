@@ -26,10 +26,10 @@ public class MyFeedPage extends PageObject {
         return new SignUpPage(driver);
     }
 
-    public void checkTextInEmptyFeedPage() {
+    public void checkTextInEmptyFeedPage(String text) {
         $(By.id("tv.motorsport.mobile:id/tv_subtitle"))
                 .shouldHave
-                        (Condition.text("You don’t have any active feeds. Go to the Racing Series, Channels and Programs and push Add to My Feed.")
+                        (Condition.text(text)
                                 .because("Text not correct or not found"));
         $(By.id("tv.motorsport.mobile:id/tv_title")).shouldBe(Condition.visible);
     }
