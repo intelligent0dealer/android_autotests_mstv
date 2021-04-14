@@ -19,7 +19,7 @@ public class RegistrationTest {
     HomePage homePage = new HomePage(setupConfig.driver);
 
 
-    @Test
+    @Test(alwaysRun = true)
     @Description("Full registration and login by created account")
     public void registrationFromProfilePage() {
         homePage.performRegistrationProcess(testAPI)
