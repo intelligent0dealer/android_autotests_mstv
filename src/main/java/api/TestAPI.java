@@ -78,12 +78,13 @@ public class TestAPI {
     public void postConfirmEmailForNewUser() {
 
         String registerToken = DbUtils.getUserConfirmationToken(UserConstants.EMAIL_FOR_REGISTRATION_TEST);
+        System.out.println(registerToken + " register token from DB");
 
-        RestAssured.given(requestSpec)
-                .param("token", registerToken)
-                .post(Endpoints.Confirm_Email)
-                .then()
-                .statusCode(200);
+                RestAssured.given(requestSpec)
+                        .param("token", registerToken)
+                        .post(Endpoints.Confirm_Email)
+                        .then()
+                        .statusCode(200);
     }
 
     public void postCheckThatEmailConfirmed() {

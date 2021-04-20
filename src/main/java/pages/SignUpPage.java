@@ -5,6 +5,9 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
 import api.TestAPI;
+
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.$;
 
 public class SignUpPage extends PageObject {
@@ -27,6 +30,8 @@ public class SignUpPage extends PageObject {
 
     public SubscriptionPage completeRegAndConfirmEmail(TestAPI testAPI) {
         $(By.id("tv.motorsport.mobile:id/register_btn_done")).click();
+        $(By.id("tv.motorsport.mobile:id/open_email_app_btn")).shouldBe(Condition.visible, Duration.ofSeconds(10));
+        $(By.id("tv.motorsport.mobile:id/email_logout")).shouldBe(Condition.visible, Duration.ofSeconds(10));
         testAPI.postConfirmEmailForNewUser();
         testAPI.postCheckThatEmailConfirmed();
         return new SubscriptionPage(driver);

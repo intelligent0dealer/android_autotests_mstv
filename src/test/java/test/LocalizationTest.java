@@ -35,4 +35,5 @@ public class LocalizationTest {
     public void resetApp() {
         setupConfig.driver.resetApp();
     }
+
 }

@@ -97,6 +97,7 @@ public class SignInTest {
 
     @AfterClass
     public void tearDown() {
-        setupConfig.driver.quit();
+        setupConfig.driver.closeApp();
+
     }
 }

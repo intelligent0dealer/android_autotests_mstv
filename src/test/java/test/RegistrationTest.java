@@ -76,7 +76,7 @@ public class RegistrationTest {
                 .chooseFreePlan()
                 .clickContinueSubButtonFromPremiumEpisode()
                 .checkPremiumVideoNameInside()
-                .pressBackButton()
+                .pressAndroidBackButton()
                 .openProfile()
                 .checkProfilePageHasLoaded();
     }

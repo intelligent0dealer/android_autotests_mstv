@@ -53,7 +53,7 @@ public class PPVTest {
         testAPI.checkPPVAccessRent(UserConstants.ID_OF_PPV_EPISODE_FOR_AUTOTESTS);
     }
 
-    @AfterMethod
+    @AfterMethod (alwaysRun = true)
     public void deletePPVAccess() {
         dbUtils.deletePPVCodeAccess(UserConstants.EMAIL_FOR_API_TEST);
         setupConfig.driver.resetApp();
