@@ -149,4 +149,19 @@ public class TestAPI {
                 .body("data.is_livestream", equalTo(true))
                 .body("data.is_record_active", equalTo(true));
     }
+
+    public String getFeed() {
+        Response nameOfProgram =
+        RestAssured.given(requestSpec)
+                .header("bearer", getBearer(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST))
+                .when()
+                .get(Endpoints.MyFeed);
+        nameOfProgram
+                .then()
+                .statusCode(200);
+        return nameOfProgram
+                .body()
+                .jsonPath()
+                .getString("data.carousels.entity.title");
+    }
 }

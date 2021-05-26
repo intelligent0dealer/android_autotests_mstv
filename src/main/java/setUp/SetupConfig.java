@@ -37,6 +37,7 @@ public class SetupConfig {
     }
 
     private void openAppiumSession() {
+        System.out.println("creating new session");
         WebDriverRunner.setWebDriver(this.driver);
         this.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         Configuration.screenshots = false;

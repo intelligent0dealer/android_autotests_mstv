@@ -33,4 +33,10 @@ public class MyFeedPage extends PageObject {
                                 .because("Text not correct or not found"));
         $(By.id("tv.motorsport.mobile:id/tv_title")).shouldBe(Condition.visible);
     }
+    public String getNameOfProgramInFeed() {
+        return $(By.id("tv.motorsport.mobile:id/subtitle")).getText();
+    }
+    public void checkThatElementsLoad() {
+        $(By.id("tv.motorsport.mobile:id/emptyState")).shouldBe(Condition.visible.because("FeedTab not found"));
+    }
 }

@@ -42,7 +42,7 @@ public class RegistrationTest {
 
     @Test
     public void registrationFromFeedTab() {
-        homePage.myFeedTabClick()
+        homePage.goToMyFeed()
                 .clickJoinNowFromFeedTab()
                 .inputLogPassReg(UserConstants.EMAIL_FOR_REGISTRATION_TEST, UserConstants.PASSWORD_FOR_API_TEST)
                 .completeRegAndConfirmEmail(testAPI)
@@ -119,5 +119,6 @@ public class RegistrationTest {
     @AfterClass
     public void tearDown() {
         setupConfig.driver.quit();
+        System.out.println("teardown");
     }
 }

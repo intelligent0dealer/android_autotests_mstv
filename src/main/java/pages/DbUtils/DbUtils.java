@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DbUtils {
-    private static final String URL = "jdbc:postgresql://psql-cluster.us.testing.motorsport.tv:5433/motorsport_user";
+    private static final String URL = "jdbc:postgresql://localhost:5432/motorsport_user";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "GfhjkmGjEvjkxfyb.123qwe";
 

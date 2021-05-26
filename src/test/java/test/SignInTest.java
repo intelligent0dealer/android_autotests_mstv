@@ -1,8 +1,8 @@
 package test;
 
 import fixture.UserConstants;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Test;
 import pages.EpisodeView.PayPerViewEpisodePage;
 import pages.ProfilePage.ProfilePage;
@@ -11,6 +11,7 @@ import setUp.SetupConfig;
 
 
 public class SignInTest {
+
     SetupConfig setupConfig = new SetupConfig();
     HomePage homePage = new HomePage(setupConfig.driver);
 
@@ -25,7 +26,7 @@ public class SignInTest {
 
     @Test
     public void signInFromFeedTab() {
-        homePage.myFeedTabClick()
+        homePage.goToMyFeed()
                 .signInButtonClickFromFeedTab()
                 .inputLogPass(UserConstants.EMAIL_FOR_API_TEST, UserConstants.PASSWORD_FOR_API_TEST)
                 .pressSignInButton();
@@ -95,9 +96,10 @@ public class SignInTest {
         setupConfig.driver.resetApp();
     }
 
-    @AfterClass
+    @AfterSuite
     public void tearDown() {
         setupConfig.driver.closeApp();
-
+        setupConfig.driver.quit();
+        System.out.println("tear down");
     }
 }

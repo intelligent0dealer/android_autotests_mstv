@@ -6,10 +6,6 @@ import org.openqa.selenium.By;
 import pages.PageObject;
 import pages.SignInPage;
 
-import java.time.Duration;
-
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -28,4 +24,15 @@ public class EpisodePage extends PageObject {
         $(By.id("tv.motorsport.mobile:id/follow")).click();
         return new SignInPage(driver);
     }
+    public String getNameOfProgramInInfo() {
+      String program = $(By.id("tv.motorsport.mobile:id/items_about"))
+                .$(By.className("android.view.ViewGroup"))
+                .$(By.id("tv.motorsport.mobile:id/title"))
+                .getText();
+      System.out.println(program);
+      return program;
+       // String[] units = program.split(": ");
+       // return units[1];
+    }
+
 }

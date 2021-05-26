@@ -12,6 +12,7 @@ import pages.SubscriptionPage;
 import api.TestAPI;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -32,7 +33,7 @@ public class HomePage extends PageObject {
         return this;
     }
 
-    public MyFeedPage myFeedTabClick() {
+    public MyFeedPage goToMyFeed() {
         $(By.id("tv.motorsport.mobile:id/my_feed_dest")).click();
         return new MyFeedPage(driver);
     }
@@ -66,5 +67,11 @@ public class HomePage extends PageObject {
     public LiveTabPage openLiveTab() {
         $(By.id("tv.motorsport.mobile:id/live_dest")).click();
         return new LiveTabPage(driver);
+    }
+    public HomePage checkThatElementsLoad() {
+        $(By.id("tv.motorsport.mobile:id/preview")).shouldBe(visible.because("Not Found on Home Page"));
+        $(By.id("tv.motorsport.mobile:id/live_studio_carousel_main_episode_cover")).shouldBe(visible.because("Not Found on Home Page"));
+      //  $(By.id("")).shouldBe(visible.because("Not Found on Home Page"));
+        return this;
     }
 }

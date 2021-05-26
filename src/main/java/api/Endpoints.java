@@ -7,5 +7,6 @@ public final class Endpoints {
     public final static String Confirm_Email = "api/usermanagement/confirm-email";
     public final static String SubscriptionInfo = "api/subscriptionmanagement/front/subscription/active";
     public final static String UserInfo = "api/usermanagement/front/user";
+    public final static String MyFeed = "api/content/appletv/feed";
 
 }
